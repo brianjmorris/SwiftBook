@@ -1,3 +1,4 @@
+package co.swiftbook.entity;
 
 public class Building {
 

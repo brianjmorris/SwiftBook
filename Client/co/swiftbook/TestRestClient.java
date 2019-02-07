@@ -1,6 +1,6 @@
-package client;
+package co.swiftbook;
 
-import client.entities.*;
+import co.swiftbook.entity.*;
 
 import java.util.List;
 

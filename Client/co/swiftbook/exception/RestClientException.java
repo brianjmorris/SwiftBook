@@ -1,4 +1,4 @@
-package client.exceptions;
+package co.swiftbook.exception;
 
 public class RestClientException extends RuntimeException {
 

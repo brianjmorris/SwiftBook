@@ -1,4 +1,4 @@
-package client;
+package co.swiftbook;
 
 import java.io.*;
 import java.net.*;
@@ -6,8 +6,8 @@ import java.util.*;
 
 import com.google.gson.*;
 
-import client.entities.User;
-import client.exceptions.RestClientException;
+import co.swiftbook.entity.User;
+import co.swiftbook.exception.RestClientException;
 
 import org.mindrot.jbcrypt.*;
 

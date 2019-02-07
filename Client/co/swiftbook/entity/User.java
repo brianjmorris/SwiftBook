@@ -1,5 +1,4 @@
-
-package client.entities;
+package co.swiftbook.entity;
 
 public class User {
 	

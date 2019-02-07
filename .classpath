@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="src" path="Client/gson"/>
-	<classpathentry kind="src" path="Client/jBCrypt-0.4/src"/>
-	<classpathentry kind="src" path="Client/src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry excluding="gson/|jBCrypt-0.4/src/|src/" kind="src" path="Client"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
