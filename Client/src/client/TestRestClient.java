@@ -1,18 +1,20 @@
-package COSC3506_Project;
+package client;
+
+import client.entities.*;
 
 import java.util.List;
 
-public class TestAPIClient {
+public class TestRestClient {
 
 	public static void main(String[] args) {
 		
 //		User newUser = new User("test2", "test2@email.com", "Test2", "User", "Organization", false);
 //		
-//		if(APIClient.createUser(newUser)) {
+//		if(RestClient.createUser(newUser)) {
 //			System.out.println("Created " + newUser);
 //		}
 		
-		User[] users = APIClient.getUsers();
+		User[] users = RestClient.getUsers();
 		
 		System.out.println("Users:");
 		

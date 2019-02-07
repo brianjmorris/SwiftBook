@@ -1,5 +1,5 @@
 
-package COSC3506_Project;
+package client.entities;
 
 public class User {
 	

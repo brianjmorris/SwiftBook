@@ -1,13 +1,17 @@
-package COSC3506_Project;
+package client;
 
 import java.io.*;
 import java.net.*;
 import java.util.*;
 
 import com.google.gson.*;
+
+import client.entities.User;
+import client.exceptions.RestClientException;
+
 import org.mindrot.jbcrypt.*;
 
-public class APIClient {
+public class RestClient {
 
 	private static String address = "http://www.cosc3506.ga/api/";
 
@@ -50,7 +54,7 @@ public class APIClient {
 			conn.disconnect();
 
 		} catch (Exception e) {
-			throw new APIClientException(e.getMessage());
+			throw new RestClientException(e.getMessage());
 		}
 
 		return users;
@@ -82,7 +86,7 @@ public class APIClient {
 			conn.disconnect();
 
 		} catch (Exception e) {
-			throw new APIClientException(e.getMessage());
+			throw new RestClientException(e.getMessage());
 		}
 
 		return true;
