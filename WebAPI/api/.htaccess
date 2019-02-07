@@ -1,0 +1,6 @@
+# Enable Rewrite Engine
+RewriteEngine On
+
+# example: redirect /api/User/1 to /api/User/index.php?UserID=1
+RewriteRule ^User([a-zA-Z0-9]+)$ User/index.php?UserID=$1
+RewriteRule ^User/([a-zA-Z0-9]+)$ User/index.php?UserID=$1
