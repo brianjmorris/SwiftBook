@@ -47,7 +47,7 @@ $columnCount = count($columns);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // POST request received
-    // http://www.cosc3506.ga/api/User/index.php
+    // http://www.cosc3506.ga/api/User
     try {
         // Construct INSERT query
         $stmtString = "INSERT INTO " . $tablename . " (";
@@ -87,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 } elseif ($_SERVER['REQUEST_METHOD'] === 'PUT'
     && (isset($_GET[$columns[0]]) && !empty($_GET[$columns[0]]))) {
     // PUT request received with id
-    // http://www.cosc3506.ga/api/User/index.php
+    // http://www.cosc3506.ga/api/User
     try {
         // Construct UPDATE query with id
         $stmtString = "UPDATE " . $tablename . " SET ";
@@ -123,7 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 } elseif ($_SERVER['REQUEST_METHOD'] === 'DELETE'
     && (isset($_GET[$columns[0]]) && !empty($_GET[$columns[0]]))) {
     // DELETE request received with id
-    // http://www.cosc3506.ga/api/User/index.php?UserID=0
+    // http://www.cosc3506.ga/api/User/0
     try {
         // Construct DELETE query with id
         $stmtString = "DELETE FROM " . $tablename
@@ -151,7 +151,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 } elseif ($_SERVER['REQUEST_METHOD'] === 'GET'
     && (isset($_GET[$columns[0]]) && !empty($_GET[$columns[0]]))) {
     // GET request received with id
-    // http://www.cosc3506.ga/api/User/index.php?UserID=0
+    // http://www.cosc3506.ga/api/User/0
     try {
         // Construct SELECT query with id
         $stmtString = "SELECT * FROM " . $tablename
@@ -196,9 +196,57 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Error executng query, set response code
         http_response_code(400);
     }
+} elseif ($_SERVER['REQUEST_METHOD'] === 'GET'
+    && (isset($_GET[$columns[1]]) && !empty($_GET[$columns[1]]))) {
+    // GET request received with Username
+    // http://www.cosc3506.ga/api/User/ByUsername/brianjmorris
+    try {
+        // Construct SELECT query with id
+        $stmtString = "SELECT * FROM " . $tablename
+        . " WHERE " . $columns[1] . " = :" . $columns[1];
+
+        // prepare the statement
+        $stmt = $pdo->prepare($stmtString);
+
+        // bind id to statement
+        $stmt->bindParam(':' . $columns[1], $_GET[$columns[1]]);
+
+        // Execute query
+        if ($stmt->execute()) {
+            // Query executed successfully, set response code
+            http_response_code(200);
+
+            if ($stmt->rowCount() > 0) {
+                // Query returned results
+                $resultArray = array();
+                $tempArray = array();
+
+                while ($row = $stmt->fetch()) {
+                    // Add each row into results array
+                    $tempArray = $row;
+                    array_push($resultArray, $tempArray);
+                }
+                // set response code
+                http_response_code(200);
+                // set Content-Type header
+                header('Content-Type: application/json');
+                // echo the JSON encoded array
+                echo json_encode($resultArray);
+            } else {
+                // No rows returned, set response code
+                http_response_code(404);
+            }
+        } else {
+            // set response code
+            http_response_code(400);
+        }
+    } catch (Exception $e) {
+        // Error executng query, set response code
+        http_response_code(400);
+    }
 } elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
     // GET request received
-    // http://www.cosc3506.ga/api/User/index.php
+    // http://www.cosc3506.ga/api/User
     try {
         // Construct SELECT all query
         $stmt = $pdo->prepare("SELECT * FROM $tablename");
