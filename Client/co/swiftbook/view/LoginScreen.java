@@ -54,8 +54,8 @@ public class LoginScreen extends Application {
         login.getStyleClass().add("login");
      
         // Add credentials to group
-        credentials.getChildren().addAll(username, password, login);
-        elements.getChildren().addAll(imageView, credentials);
+        credentials.getChildren().addAll(imageView, username, password, login);
+        elements.getChildren().addAll(credentials);
         
         // Add all elements to scene
         root.getChildren().add(elements);
