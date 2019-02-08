@@ -5,6 +5,6 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry excluding="gson/|jBCrypt-0.4/src/|src/" kind="src" path="Client"/>
+	<classpathentry excluding="gson/|jBCrypt-0.4/src/|src/|co/swiftbook/view/view_src/" kind="src" path="Client"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

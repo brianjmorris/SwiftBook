@@ -1,0 +1,26 @@
+/*
+ * Description: SwiftBook Theme [Dark]
+ * Colours: black, white, #5e5e5e, #c6272f
+*/
+
+.root {
+    -fx-background-color: rgb(48, 48, 48);
+    -fx-focus-color: #c6272f;
+}
+.credentials {
+    -fx-font-size: 24;
+    -fx-font-family: 'Raleway' sans-serif;
+}
+
+.login {
+    -fx-border-width: 0;
+    -fx-border-color: #c6272f;
+    -fx-background-color: #c6272f;
+    -fx-text-fill: white;
+}
+
+.login:hover {
+    -fx-border-width: 0;
+    -fx-background-color: white;
+    -fx-text-fill: #c6272f;
+}
