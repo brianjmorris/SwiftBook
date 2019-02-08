@@ -5,8 +5,11 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -16,6 +19,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.*;
  
 public class LoginScreen extends Application {
+	
     public static void main(String[] args) {
         launch(args);
     }
@@ -25,17 +29,21 @@ public class LoginScreen extends Application {
     	
     	// View title
         primaryStage.setTitle("SwiftBook");
-        StackPane root = new StackPane();
+        BorderPane root = new BorderPane();
+        root.setPadding(new Insets(160, 0, 0, 0));
         Scene scene = new Scene(root, 1000, 800);
         scene.getStylesheets().add(getClass().getResource("stylesheet.css").toExternalForm());
         Group elements = new Group();
         
         // Logo and Software Name
-        Image softwareName = new Image("http://cdn.onlinewebfonts.com/svg/img_377100.png", 20, 0, true, false);
+        Image softwareName = new Image("https://raw.githubusercontent.com/brianjmorris/SwiftBook/master/Client/co/swiftbook/view/img/swiftbook.png?token=Agadc0FD5YbaHysmv4fFWzXJI-IjKDRDks5cZiIVwA%3D%3D", 0, 115, true, true);
         ImageView imageView = new ImageView();
         imageView.setImage(softwareName);
-        imageView.setFitWidth(100);
-        imageView.setPreserveRatio(true);
+        
+        // Register
+        Button register = new Button("Register");
+        root.setTop(register);
+        root.setAlignment(register,  Pos.TOP_RIGHT);
         
         // Credentials
         VBox credentials = new VBox();
@@ -43,8 +51,11 @@ public class LoginScreen extends Application {
         credentials.setSpacing(15);
         
         TextField username = new TextField();
-        TextField password = new TextField();
+        PasswordField password = new PasswordField();
         Button login = new Button("Login");
+        credentials.setPadding(new Insets(100, 0, 0, 0));
+        root.setCenter(credentials);
+        root.setMargin(credentials,  new Insets(70, 300, 0, 300));
         
         // Styling
         root.getStyleClass().add("root");
@@ -52,13 +63,13 @@ public class LoginScreen extends Application {
         password.setPromptText("Password");
         credentials.getStyleClass().add("credentials");
         login.getStyleClass().add("login");
+        register.getStyleClass().add("register");
      
         // Add credentials to group
-        credentials.getChildren().addAll(imageView, username, password, login);
-        elements.getChildren().addAll(credentials);
+        credentials.getChildren().addAll(username, password, login);
+        root.setTop(imageView);
+        root.setAlignment(imageView, Pos.TOP_CENTER);
         
-        // Add all elements to scene
-        root.getChildren().add(elements);
         primaryStage.setScene(scene);
         primaryStage.show();
     }

@@ -1,6 +1,7 @@
 /*
  * Description: SwiftBook Theme [Dark]
  * Colours: black, white, #5e5e5e, #c6272f
+ * Date: 2019-02-07
 */
 
 .root {
@@ -10,6 +11,8 @@
 .credentials {
     -fx-font-size: 24;
     -fx-font-family: 'Raleway' sans-serif;
+    -fx-padding-top: 30;
+    -fx-width: 100;
 }
 
 .login {
