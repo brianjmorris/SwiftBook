@@ -8,6 +8,8 @@ public class TestRestClient {
 
 	public static void main(String[] args) {
 		
+		
+		// TODO finish this
 //		User newUser = new User("test2", "test2@email.com", "Test2", "User", "Organization", false);
 //		
 //		if(RestClient.createUser(newUser)) {
