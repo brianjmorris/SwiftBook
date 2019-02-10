@@ -2,7 +2,9 @@ package co.swiftbook.entity;
 
 public class Building {
 
-	String buildingID;
-	String[] buildingRooms;
+	private String buildingID;
+	private String[] buildingRooms;
+	private String wheelchairAccessable;
+	private String buildingSection;	// i.e. East Wing, etc.
 	
 }
