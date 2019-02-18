@@ -8,10 +8,10 @@
     -fx-background-color: rgb(48, 48, 48);
     -fx-focus-color: #c6272f;
 }
+
 .credentials {
     -fx-font-size: 24;
     -fx-font-family: 'Raleway' sans-serif;
-    -fx-padding-top: 30;
     -fx-width: 100;
 }
 

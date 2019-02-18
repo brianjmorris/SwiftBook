@@ -30,7 +30,7 @@ public class LoginScreen extends Application {
     	// View title
         primaryStage.setTitle("SwiftBook");
         BorderPane root = new BorderPane();
-        root.setPadding(new Insets(160, 0, 0, 0));
+        root.setPadding(new Insets(220, 0, 0, 0));
         Scene scene = new Scene(root, 1000, 800);
         scene.getStylesheets().add(getClass().getResource("stylesheet.css").toExternalForm());
         Group elements = new Group();
@@ -42,8 +42,6 @@ public class LoginScreen extends Application {
         
         // Register
         Button register = new Button("Register");
-        root.setTop(register);
-        root.setAlignment(register,  Pos.TOP_RIGHT);
         
         // Credentials
         VBox credentials = new VBox();
@@ -55,7 +53,7 @@ public class LoginScreen extends Application {
         Button login = new Button("Login");
         credentials.setPadding(new Insets(100, 0, 0, 0));
         root.setCenter(credentials);
-        root.setMargin(credentials,  new Insets(70, 300, 0, 300));
+        root.setMargin(credentials,  new Insets(10, 300, 0, 300));
         
         // Styling
         root.getStyleClass().add("root");
