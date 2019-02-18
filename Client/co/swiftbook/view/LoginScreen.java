@@ -21,7 +21,7 @@ import javafx.scene.*;
 public class LoginScreen extends Application {
 	
     public static void main(String[] args) {
-        launch(args);
+    		launch(args);
     }
     
     @Override
@@ -50,7 +50,7 @@ public class LoginScreen extends Application {
         
         TextField username = new TextField();
         PasswordField password = new PasswordField();
-        Button login = new Button("Login");
+        Button login = new Button("Login"); // TODO: can we change the cursor?
         credentials.setPadding(new Insets(100, 0, 0, 0));
         root.setCenter(credentials);
         root.setMargin(credentials,  new Insets(10, 300, 0, 300));

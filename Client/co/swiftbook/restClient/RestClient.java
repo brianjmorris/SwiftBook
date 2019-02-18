@@ -1,4 +1,4 @@
-package co.swiftbook;
+package co.swiftbook.restClient;
 
 import java.io.*;
 import java.net.*;
@@ -11,45 +11,56 @@ import co.swiftbook.exception.RestClientException;
 
 import org.mindrot.jbcrypt.*;
 
-public class RestClient {
+public class RestClient<T> {
 
-	private static String address = "http://www.cosc3506.ga/api/";
+	private String address = "https://swiftbook.co/api/";
+	private String[] booleanFields = {
+		"Administrator"	
+	};
+	
+	private Class entityClass;
+	private Class entityArrayClass;
+	
+	public RestClient(Class entityClass, Class entityArrayClass) {
+		this.entityClass = entityClass;
+		this.entityArrayClass = entityArrayClass;
+		
+		this.address += this.entityClass.getSimpleName() + "/";
+	}
+	
+	public T[] getAll() {
+		
+//		ArrayList<T> result = null;
+		T[] result = null;
 
-	public static User[] getUsers() {
-
-		User[] users = new User[0];
-
-		try {
-
+		try {			
 			Gson gson = new Gson();
 
-			URL url = new URL(address + "User/");
+			URL url = new URL(address);
 
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setDoOutput(true);
 			conn.setRequestMethod("GET");
 			conn.setRequestProperty("Content-Type", "application/json");
 
-			int status = conn.getResponseCode();
-
 			if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
-				throw new Exception("Could not retrieve user, received code "
+				throw new Exception("Could not retrieve objects, received code "
 						+ conn.getResponseCode());
 			}
 
-			StringBuilder userStringBuilder = new StringBuilder();
+			StringBuilder jsonStringBuilder = new StringBuilder();
 			String input = null;
 
 			try (BufferedReader buffer = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {	
 				while ((input = buffer.readLine()) != null) {
-					userStringBuilder.append(input);
+					jsonStringBuilder.append(input);
 				}
 			}
 
-			String userString = userStringBuilder.toString();
-			userString = intToBoolean(userString, "Administrator");
-
-			users = gson.fromJson(userString.toString(), User[].class);
+			String jsonString = jsonStringBuilder.toString();
+			jsonString = intsToBooleans(jsonString);
+			
+			result = (T[]) gson.fromJson(jsonString, this.entityArrayClass);
 
 			conn.disconnect();
 
@@ -57,22 +68,22 @@ public class RestClient {
 			throw new RestClientException(e.getMessage());
 		}
 
-		return users;
+		return result;
 
 	}
 
-	public static boolean createUser(User newUser) {
+	public boolean create(T newObject) {
 		try {
 			Gson gson = new Gson();
 
-			URL url = new URL(address + "User/");
+			URL url = new URL(address);
 
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setDoOutput(true);
 			conn.setRequestMethod("POST");
 			conn.setRequestProperty("Content-Type", "application/json");
 
-			String newUserString = gson.toJson(newUser, User.class);
+			String newUserString = gson.toJson(newObject, entityClass);
 
 			OutputStream out = conn.getOutputStream();
 			out.write(newUserString.getBytes());
@@ -92,10 +103,12 @@ public class RestClient {
 		return true;
 	}
 
-	private static String intToBoolean(String str, String field) {
-		field = "\"" + field + "\":";
-		str = str.replaceAll(field + "0", field + "\"false\"");
-		str = str.replaceAll(field + "1", field + "\"true\"");
+	private String intsToBooleans(String str) {
+		for(int i = 0; i < this.booleanFields.length; i++) {
+			String temp = "\"" + this.booleanFields[i] + "\":";
+			str = str.replaceAll(temp + "0", temp + "\"false\"");
+			str = str.replaceAll(temp + "1", temp + "\"true\"");
+		}
 		return str;
 	}
 
