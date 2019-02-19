@@ -13,8 +13,8 @@ import org.mindrot.jbcrypt.*;
 
 public class RestClient<T> {
 
-	private String address = "https://swiftbook.co/api/";
-	private String[] booleanFields = {
+	protected String address = "https://swiftbook.co/api/";
+	protected String[] booleanFields = {
 		"Administrator"	
 	};
 	
@@ -27,7 +27,7 @@ public class RestClient<T> {
 		
 		this.address += this.entityClass.getSimpleName() + "/";
 	}
-	
+
 	public T[] getAll() {
 		
 //		ArrayList<T> result = null;
@@ -69,7 +69,52 @@ public class RestClient<T> {
 		}
 
 		return result;
+	}
+	
+	public T get(int i) {
+		
+		T result = null;
 
+		try {		
+			Gson gson = new Gson();
+
+			URL url = new URL(address + i);
+
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setDoOutput(true);
+			conn.setRequestMethod("GET");
+			conn.setRequestProperty("Content-Type", "application/json");
+
+			if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
+				throw new Exception("Could not retrieve objects, received code "
+						+ conn.getResponseCode());
+			}
+
+			StringBuilder jsonStringBuilder = new StringBuilder();
+			String input = null;
+
+			try (BufferedReader buffer = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {	
+				while ((input = buffer.readLine()) != null) {
+					jsonStringBuilder.append(input);
+				}
+			}
+
+			String jsonString = jsonStringBuilder.toString();
+			jsonString = intsToBooleans(jsonString);
+			
+			T[] temp = (T[]) gson.fromJson(jsonString, this.entityArrayClass);
+			
+			if(0 < temp.length) {
+				result = temp[0];
+			}
+			
+			conn.disconnect();
+
+		} catch (Exception e) {
+			throw new RestClientException(e.getMessage());
+		}
+
+		return result;
 	}
 
 	public boolean create(T newObject) {
@@ -103,7 +148,7 @@ public class RestClient<T> {
 		return true;
 	}
 
-	private String intsToBooleans(String str) {
+	protected String intsToBooleans(String str) {
 		for(int i = 0; i < this.booleanFields.length; i++) {
 			String temp = "\"" + this.booleanFields[i] + "\":";
 			str = str.replaceAll(temp + "0", temp + "\"false\"");
