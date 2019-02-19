@@ -36,7 +36,7 @@ public class LoginScreen extends Application {
         Group elements = new Group();
         
         // Logo and Software Name
-        Image softwareName = new Image("https://raw.githubusercontent.com/brianjmorris/SwiftBook/master/Client/co/swiftbook/view/img/swiftbook.png?token=Agadc0FD5YbaHysmv4fFWzXJI-IjKDRDks5cZiIVwA%3D%3D", 0, 115, true, true);
+        Image softwareName = new Image("https://raw.githubusercontent.com/amanda-anderson/resources/master/swiftbook.png", 0, 115, true, true);
         ImageView imageView = new ImageView();
         imageView.setImage(softwareName);
         
