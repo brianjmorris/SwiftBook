@@ -1,29 +1,28 @@
 package co.swiftbook.view;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.*;
- 
-public class LoginScreen extends Application {
+
+public class Login extends Application {
 	
     public static void main(String[] args) {
     		launch(args);
     }
     
+    @SuppressWarnings("unchecked")
     @Override
     public void start(Stage primaryStage) {
     	
@@ -41,7 +40,7 @@ public class LoginScreen extends Application {
         imageView.setImage(softwareName);
         
         // Register
-        Button register = new Button("Register");
+        Button register = new Button("New organization? Register here.");
         
         // Credentials
         VBox credentials = new VBox();
@@ -50,7 +49,7 @@ public class LoginScreen extends Application {
         
         TextField username = new TextField();
         PasswordField password = new PasswordField();
-        Button login = new Button("Login"); // TODO: can we change the cursor?
+        Button login = new Button("Login");
         credentials.setPadding(new Insets(100, 0, 0, 0));
         root.setCenter(credentials);
         root.setMargin(credentials,  new Insets(10, 300, 0, 300));
@@ -59,15 +58,36 @@ public class LoginScreen extends Application {
         root.getStyleClass().add("root");
         username.setPromptText("Username");
         password.setPromptText("Password");
-        credentials.getStyleClass().add("credentials");
-        login.getStyleClass().add("login");
+        credentials.getStyleClass().add("form");
+        login.getStyleClass().add("customButton");
         register.getStyleClass().add("register");
      
         // Add credentials to group
         credentials.getChildren().addAll(username, password, login);
         root.setTop(imageView);
+        root.setBottom(register);
+        register.setPadding(new Insets(0, 0, 110, 330));
         root.setAlignment(imageView, Pos.TOP_CENTER);
         
+        // Event Handling
+        // Change mouse to hand icon on button hover
+        login.setOnMouseEntered(new EventHandler() {
+            public void handle(Event e) {
+                scene.setCursor(Cursor.HAND);
+            }
+        });
+        
+        login.setOnMouseExited(new EventHandler() {
+            public void handle(Event e) {
+                scene.setCursor(Cursor.DEFAULT);
+            }
+        });
+        
+        register.setOnAction(e -> {
+            Registration registration = new Registration();
+            scene.setRoot(registration.getRoot());
+        });
+
         primaryStage.setScene(scene);
         primaryStage.show();
     }

@@ -9,21 +9,53 @@
     -fx-focus-color: #c6272f;
 }
 
-.credentials {
+.form {
     -fx-font-size: 24;
     -fx-font-family: 'Raleway' sans-serif;
     -fx-width: 100;
 }
 
-.login {
+.customButton {
     -fx-border-width: 0;
     -fx-border-color: #c6272f;
     -fx-background-color: #c6272f;
     -fx-text-fill: white;
 }
 
-.login:hover {
-    -fx-border-width: 0;
+.customButton:hover {
     -fx-background-color: white;
     -fx-text-fill: #c6272f;
+}
+
+.register {
+    -fx-font-size: 22;
+    -fx-font-family: 'Raleway' sans-serif;
+    -fx-border-width: 0;
+    -fx-text-fill: #c6272f;
+    -fx-background-color: transparent;
+}
+
+.register:hover {
+    -fx-text-fill: white;
+}
+
+.toggleButton {
+    -fx-font-size: 20;
+    -fx-font-family: 'Raleway' sans-serif;
+    -fx-border-width: 0;
+    -fx-text-fill: #c6272f;
+    -fx-background-color: transparent;
+}
+
+.staticText {
+    -fx-font-size: 70;
+    -fx-font-family: 'Raleway' sans-serif;
+    -fx-border-width: 0;
+    -fx-fill: #c6272f;
+}
+
+.promptText {
+    -fx-font-size: 24;
+    -fx-font-family: 'Raleway' sans-serif;
+    -fx-fill: white;
 }
