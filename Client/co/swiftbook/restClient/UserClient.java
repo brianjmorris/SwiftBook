@@ -19,7 +19,6 @@ public class UserClient extends RestClient<User> {
 	 */
 	public UserClient() {
 		super(User.class, User[].class);
-		
 	}
 
 	public User getByUsername(String username) {
@@ -36,7 +35,7 @@ public class UserClient extends RestClient<User> {
 			conn.setRequestProperty("Content-Type", "application/json");
 
 			if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
-				throw new Exception("Could not retrieve objects, received code "
+				throw new RestClientException("Could not retrieve objects, received code "
 						+ conn.getResponseCode());
 			}
 

@@ -1,10 +1,17 @@
 package co.swiftbook.entity;
 
-public class Building {
+import java.util.ArrayList;
 
-	private String buildingID;
-	private String[] buildingRooms;
-	private String wheelchairAccessable;
-	private String buildingSection;	// i.e. East Wing, etc.
+public class Building implements ApiObject {
+
+	private int buildingID;
+	private int organizationId;
+	private ArrayList<Room> buildingRooms;
+	private String wheelchairAccessible;
+	private String[] sections;	// i.e. East Wing, etc.
 	
+	@Override
+	public int getID() {
+		return this.buildingID;
+	}
 }

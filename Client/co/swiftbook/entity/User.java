@@ -1,6 +1,6 @@
 package co.swiftbook.entity;
 
-public class User {
+public class User implements ApiObject {
 	
 	private int UserID;
 	private String Username;
@@ -155,7 +155,8 @@ public class User {
 	/**
 	 * @return the userID
 	 */
-	public int getUserID() {
+	@Override
+	public int getID() {
 		return UserID;
 	}
 

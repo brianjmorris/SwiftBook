@@ -1,18 +1,17 @@
 package co.swiftbook.entity;
 
-public class Room {
+public class Room implements ApiObject {
 	
 	private int roomID;
+	private int buildingID;
 	private String room;
 	private String floorNumber;
-	private String roomType; // classroom, conference room, etc. I used a space, please appreciate my efforts
+	private String buildingSection;
+	private String roomType; // classroom, conference room, etc.
 	
-	/**
-	 * 
-	 * @return the roomID
-	 */
-	public int getRoomID() {
-		return roomID;
+	@Override
+	public int getID() {
+		return this.roomID;
 	}
 	public void setRoomID(int roomID) {
 		this.roomID = roomID;
