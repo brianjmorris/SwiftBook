@@ -5,7 +5,7 @@ import java.util.List;
 
 import co.swiftbook.entity.*;
 
-public class TestRestClient {
+public class TestUserClient {
 
 	public static void main(String[] args) {
 		
