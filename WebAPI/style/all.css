@@ -1,22 +1,26 @@
-  body, html {
-    font-size: 18px;
-    font-family: 'Noto Sans', sans-serif;
-    background-color: #111111;
-    color: #ececec;
-  }
+body, html {
+  font-size: 18px;
+  font-family: 'Noto Sans', sans-serif;
+  background-color: #111111;
+  color: #ececec;
+}
 
-  h1, h2, h3, h4, h5, h6 {
-    font-family: 'Raleway', sans-serif;
-  }
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Raleway', sans-serif;
+}
 
-  img[src*="000webhost"],
-  img[alt*="000webhost"],
-  a[title*="000webhost"],
-  a[href*="000webhost"] {
-    display: none
-  }
+img[src*="000webhost"],
+img[alt*="000webhost"],
+a[title*="000webhost"],
+a[href*="000webhost"] {
+  display: none
+}
 
-  a, a:active, a:visited, a:hover {
-    text-decoration: none;
-    color: #267a1a;
-  }
+a, a:active, a:visited, a:hover {
+  text-decoration: none;
+  color: #37bf24;
+}
+
+ul, li {
+  list-style: none;
+}

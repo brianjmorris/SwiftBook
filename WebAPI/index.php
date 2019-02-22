@@ -1,21 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML>
+<html>
   <head>
-    <meta charset="utf-8" />
-    <title>COSC3506 Project</title>
-
-    <link href="/style/all.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Noto+Sans|Raleway" rel="stylesheet">
-
-    <!-- connect to database -->
-    <?php // include("db.php");?>
+    <title>SwiftBook</title>
+    <link href="style/all.css" rel="stylesheet" type="text/css"></link>
 
   </head>
-
   <body>
-
-    <h1>Software Engineering Project</h1>
-    <p>This is a temporary host for our project's backend, the Web API</p>
-
+    <h1>SwiftBook</h1>
+    <h2>Enterprise Room Management and Scheduling</h2>
+    <p>
+      A project from:
+      <ul>
+        <li><a href="https://brianmorris.info">Brian Morris</a></li>
+        <li><a href="https://amandaanderson.io">Amanda Anderson</a></li>
+        <li><a href="http://dluitel.ca">Dipeeka Luitel</a></li>
+      </ul>
+    </p>
   </body>
 </html>

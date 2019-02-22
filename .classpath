@@ -6,5 +6,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry excluding="gson/|jBCrypt-0.4/src/|src/|co/swiftbook/view/view_src/" kind="src" path="Client"/>
+	<classpathentry kind="lib" path="lib/gson.jar"/>
+	<classpathentry kind="lib" path="lib/jbcrypt.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -1,6 +1,10 @@
 # Enable Rewrite Engine
 RewriteEngine On
 
-# example: redirect /api/User/1 to /api/User/index.php?UserID=1
-RewriteRule ^User([a-zA-Z0-9]+)$ User/index.php?UserID=$1
-RewriteRule ^User/([a-zA-Z0-9]+)$ User/index.php?UserID=$1
+# redirect /api/User/1 to /api/User/index.php?UserID=1
+RewriteRule ^User([0-9]+)$ User/index.php?UserID=$1
+RewriteRule ^User/([0-9]+)$ User/index.php?UserID=$1
+
+# redirect /api/User/ByUsername/brianjmorris to /api/User/index.php?Username=brianjmorris
+RewriteRule ^User/ByUsername([a-zA-Z0-9]+)$ User/index.php?Username=$1
+RewriteRule ^User/ByUsername/([a-zA-Z0-9]+)$ User/index.php?Username=$1

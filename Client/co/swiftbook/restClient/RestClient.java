@@ -10,7 +10,7 @@ import co.swiftbook.entity.ApiObject;
 import co.swiftbook.entity.User;
 import co.swiftbook.exception.RestClientException;
 
-import org.mindrot.jbcrypt.*;
+import org.mindrot.jbcrypt.BCrypt;
 
 public abstract class RestClient<T> {
 
