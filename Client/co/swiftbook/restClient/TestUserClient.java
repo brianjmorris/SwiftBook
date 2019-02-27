@@ -13,7 +13,7 @@ public class TestUserClient {
 		UserClient userClient = new UserClient();
 		
 		// create a new user
-		User newUser = new User("TestUser", "test@email.com", "Glenn", "Smith", "Organization", false);
+		User newUser = new User("TestUser", "test@email.com", "Glenn", "Smith", new Organization(), false);
 		if(userClient.create(newUser)) {
 			System.out.println("Created User: " + newUser);
 		}

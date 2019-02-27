@@ -7,7 +7,6 @@ import java.util.*;
 import com.google.gson.*;
 
 import co.swiftbook.entity.ApiObject;
-import co.swiftbook.entity.User;
 import co.swiftbook.exception.RestClientException;
 
 import org.mindrot.jbcrypt.BCrypt;
@@ -124,7 +123,7 @@ public abstract class RestClient<T> {
 		
 		try {
 			Gson gson = new Gson();
-
+			
 			URL url = new URL(address);
 
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -154,19 +153,19 @@ public abstract class RestClient<T> {
 		return success;
 	}
 
-	public boolean update(ApiObject newObject) {
+	public boolean update(T newObject) {
 		
 		boolean success = true;
 		
-		if(get(newObject.getID()) == null) {
-			success = false;
-			throw new RestClientException("User does not exist");
-		}
-		
 		try {
+			if(get(((ApiObject)newObject).getID()) == null) {
+				success = false;
+				throw new RestClientException("User does not exist");
+			}
+			
 			Gson gson = new Gson();
 
-			URL url = new URL(address + newObject.getID());
+			URL url = new URL(address + ((ApiObject)newObject).getID());
 
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setDoOutput(true);
