@@ -85,7 +85,7 @@ public class Login extends Application {
         
         register.setOnAction(e -> {
             Registration registration = new Registration();
-            scene.setRoot(registration.getRoot());
+            registration.start(primaryStage);
         });
 
         primaryStage.setScene(scene);
