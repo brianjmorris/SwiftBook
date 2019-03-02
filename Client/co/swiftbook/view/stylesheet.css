@@ -1,11 +1,13 @@
 /*
  * Description: SwiftBook Theme [Dark]
- * Colours: black, white, #5e5e5e, #c6272f
+ * Colours: #000000, #ffffff, #5e5e5e, #c6272f
  * Date: 2019-02-07
 */
 
 .root {
-    -fx-background-color: rgb(48, 48, 48);
+    /* -fx-background-color: rgb(48, 48, 48); */
+    /* Below is the same colour in hex */
+    -fx-background-color: #303030;
     -fx-focus-color: #c6272f;
 }
 
@@ -19,11 +21,11 @@
     -fx-border-width: 0;
     -fx-border-color: #c6272f;
     -fx-background-color: #c6272f;
-    -fx-text-fill: white;
+    -fx-text-fill: #ffffff;
 }
 
 .customButton:hover {
-    -fx-background-color: white;
+    -fx-background-color: #ffffff;
     -fx-text-fill: #c6272f;
 }
 
@@ -36,7 +38,7 @@
 }
 
 .register:hover {
-    -fx-text-fill: white;
+    -fx-text-fill: #ffffff;
 }
 
 .toggleButton {
@@ -57,5 +59,5 @@
 .promptText {
     -fx-font-size: 24;
     -fx-font-family: 'Raleway' sans-serif;
-    -fx-fill: white;
+    -fx-fill: #ffffff;
 }

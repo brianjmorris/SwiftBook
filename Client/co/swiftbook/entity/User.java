@@ -1,171 +1,128 @@
 package co.swiftbook.entity;
 
 public class User implements ApiObject {
-	
-	private int UserID;
-	private String Username;
-	private String Email;
-	private String FirstName;
-	private String LastName;
-	private String Organization;
-	private boolean Administrator;
-	
+
+	private int userID;
+	private Organization organization;
+	private String username;
+	private String email;
+	private String firstName;
+	private String lastName;
+	private boolean administrator;
+
 	/**
 	 * Create a new User
-	 * @param userID the UserID to set
-	 * @param username the Username to set
-	 * @param email the Email to set
-	 * @param firstName the FirstName to set
-	 * @param lastName the LastName to set
-	 * @param organization the Organization to set
-	 * @param administrator the Administrator to set
+	 * @param username the username to set
+	 * @param email the email to set
+	 * @param firstName the firstName to set
+	 * @param lastName the lastName to set
+	 * @param org the organization to set
+	 * @param administrator the administrator value to set
 	 */
-	public User(int userID, String username, String email, 
-			String firstName, String lastName, String organization, 
-			boolean administrator) {
-		this.UserID = userID;
-		this.Username = username;
-		this.Email = email;
-		this.FirstName = firstName;
-		this.LastName = lastName;
-		this.Organization = organization;
-		this.Administrator = administrator;
+	public User(String username, String email, String firstName,
+			String lastName, Organization org, boolean administrator) {
+		this.username = username;
+		this.email = email;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.organization = org;
+		this.administrator = administrator;
 	}
-	
-	/**
-	 * Create a new User
-	 * @param username the Username to set
-	 * @param email the Email to set
-	 * @param firstName the FirstName to set
-	 * @param lastName the LastName to set
-	 * @param organization the Organization to set
-	 * @param administrator the Administrator to set
-	 */
-	public User(String username, String email, String firstName, 
-			String lastName, String organization, boolean administrator) {
-		this.Username = username;
-		this.Email = email;
-		this.FirstName = firstName;
-		this.LastName = lastName;
-		this.Organization = organization;
-		this.Administrator = administrator;
+
+	@Override
+	public int getID() {
+		return this.userID;
 	}
-	
+
 	/**
-	 * Create a new User
-	 * @param username the Username to set
-	 * @param email the Email to set
-	 * @param firstName the FirstName to set
-	 * @param lastName the LastName to set
-	 * @param administrator the Administrator to set
+	 * @return the organization
 	 */
-	public User(String username, String email, String firstName, 
-			String lastName, boolean administrator) {
-		this.Username = username;
-		this.Email = email;
-		this.FirstName = firstName;
-		this.LastName = lastName;
-		this.Administrator = administrator;
+	public Organization getOrganization() {
+		return organization;
+	}
+
+	/**
+	 * @param organization the organization to set
+	 */
+	public void setOrganization(Organization org) {
+		this.organization = org;
 	}
 
 	/**
 	 * @return the username
 	 */
 	public String getUsername() {
-		return Username;
+		return username;
 	}
 
 	/**
 	 * @param username the username to set
 	 */
 	public void setUsername(String username) {
-		Username = username;
+		this.username = username;
 	}
 
 	/**
 	 * @return the email
 	 */
 	public String getEmail() {
-		return Email;
+		return email;
 	}
 
 	/**
 	 * @param email the email to set
 	 */
 	public void setEmail(String email) {
-		Email = email;
+		this.email = email;
 	}
 
 	/**
 	 * @return the firstName
 	 */
 	public String getFirstName() {
-		return FirstName;
+		return firstName;
 	}
 
 	/**
 	 * @param firstName the firstName to set
 	 */
 	public void setFirstName(String firstName) {
-		FirstName = firstName;
+		this.firstName = firstName;
 	}
 
 	/**
 	 * @return the lastName
 	 */
 	public String getLastName() {
-		return LastName;
+		return lastName;
 	}
 
 	/**
 	 * @param lastName the lastName to set
 	 */
 	public void setLastName(String lastName) {
-		LastName = lastName;
+		this.lastName = lastName;
 	}
 
 	/**
-	 * @return the organization
+	 * @param hash the hash to set
 	 */
-	public String getOrganization() {
-		return Organization;
-	}
-
-	/**
-	 * @param organization the organization to set
-	 */
-	public void setOrganization(String organization) {
-		Organization = organization;
+	public void setHash(String hash) {
+		Hash = hash;
 	}
 
 	/**
 	 * @return the administrator
 	 */
 	public boolean isAdministrator() {
-		return Administrator;
+		return administrator;
 	}
 
 	/**
 	 * @param administrator the administrator to set
 	 */
 	public void setAdministrator(boolean administrator) {
-		Administrator = administrator;
+		this.administrator = administrator;
 	}
 
-	/**
-	 * @return the userID
-	 */
-	@Override
-	public int getID() {
-		return UserID;
-	}
-
-	/**
-	 * @return User as string
-	 */
-	@Override
-	public String toString() {
-		return this.FirstName + " " + this.LastName;
-	}
-	
 }

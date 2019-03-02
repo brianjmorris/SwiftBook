@@ -19,7 +19,7 @@ import javafx.scene.*;
 public class Login extends Application {
 	
     public static void main(String[] args) {
-    		launch(args);
+    	launch(args);
     }
     
     @SuppressWarnings("unchecked")
@@ -48,6 +48,7 @@ public class Login extends Application {
         credentials.setSpacing(15);
         
         TextField username = new TextField();
+        // TODO limit password to 50 characters (may not be applicable here)
         PasswordField password = new PasswordField();
         Button login = new Button("Login");
         credentials.setPadding(new Insets(100, 0, 0, 0));

@@ -13,10 +13,6 @@ import co.swiftbook.exception.RestClientException;
 
 public class UserClient extends RestClient<User> {
 
-	/**
-	 * @param entityClass
-	 * @param entityArrayClass
-	 */
 	public UserClient() {
 		super(User.class, User[].class);
 	}
@@ -35,7 +31,7 @@ public class UserClient extends RestClient<User> {
 			conn.setRequestProperty("Content-Type", "application/json");
 
 			if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
-				throw new RestClientException("Could not retrieve objects, received code "
+				throw new RestClientException("Could not retrieve user, received code "
 						+ conn.getResponseCode());
 			}
 

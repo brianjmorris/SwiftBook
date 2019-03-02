@@ -1,20 +1,16 @@
-<!DOCTYPE HTML>
-<html>
-  <head>
-    <title>SwiftBook</title>
-    <link href="style/all.css" rel="stylesheet" type="text/css"></link>
+<?php include("/home/u752546149/domains/swiftbook.co/public_html/include/header.php"); ?>
 
-  </head>
-  <body>
-    <h1>SwiftBook</h1>
-    <h2>Enterprise Room Management and Scheduling</h2>
-    <p>
-      A project from:
-      <ul>
-        <li><a href="https://brianmorris.info">Brian Morris</a></li>
-        <li><a href="https://amandaanderson.io">Amanda Anderson</a></li>
-        <li><a href="http://dluitel.ca">Dipeeka Luitel</a></li>
-      </ul>
-    </p>
-  </body>
-</html>
+<p>
+  <a href="/api" title="SwiftBook REST API" >View the API</a>
+</p>
+
+<p>
+  A project by:
+  <ul>
+    <li><a href="https://brianmorris.info" target="_BLANK">Brian Morris</a></li>
+    <li><a href="https://amandaanderson.io" target="_BLANK">Amanda Anderson</a></li>
+    <li><a href="http://dluitel.ca" target="_BLANK">Dipeeka Luitel</a></li>
+  </ul>
+</p>
+
+<?php include("/home/u752546149/domains/swiftbook.co/public_html/include/footer.php"); ?>
