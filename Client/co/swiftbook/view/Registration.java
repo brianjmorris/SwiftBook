@@ -18,13 +18,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.*;
 
+// TODO the term/title 'Registration' may be more applicable to when an (admin) account is created. Maybe we can name this 'NewBuilding' or something?
 public class Registration extends Application {
 	
     final BorderPane root = new BorderPane();
     Scene scene = new Scene(root, 1000, 800);
 	
     public static void main(String[] args) {
-    		launch(args);
+    	launch(args);
     }
     
     @SuppressWarnings("unchecked")

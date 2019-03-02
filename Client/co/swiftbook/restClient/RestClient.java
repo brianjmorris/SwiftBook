@@ -140,7 +140,7 @@ public abstract class RestClient<T> {
 
 			if (conn.getResponseCode() != HttpURLConnection.HTTP_CREATED) {
 				success = false;
-				throw new Exception("Error creating user, received code "
+				throw new Exception("Error creating object, received code "
 						+ conn.getResponseCode());
 			}
 

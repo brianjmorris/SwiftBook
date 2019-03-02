@@ -8,6 +8,7 @@ public class User implements ApiObject {
 	private String FirstName;
 	private String LastName;
 	private String Organization;
+	private String Hash;
 	private boolean Administrator;
 	
 	/**
@@ -136,6 +137,13 @@ public class User implements ApiObject {
 	 */
 	public void setOrganization(String organization) {
 		Organization = organization;
+	}
+
+	/**
+	 * @param hash the hash to set
+	 */
+	public void setHash(String hash) {
+		Hash = hash;
 	}
 
 	/**
