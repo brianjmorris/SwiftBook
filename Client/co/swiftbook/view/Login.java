@@ -70,8 +70,10 @@ public class Login extends Application {
         register.setPadding(new Insets(0, 0, 110, 330));
         root.setAlignment(imageView, Pos.TOP_CENTER);
         
+        primaryStage.setScene(scene);
+        primaryStage.show();
+        
         // Event Handling
-        // Change mouse to hand icon on button hover
         login.setOnMouseEntered(new EventHandler() {
             public void handle(Event e) {
                 scene.setCursor(Cursor.HAND);
@@ -84,12 +86,27 @@ public class Login extends Application {
             }
         });
         
+        register.setOnMouseEntered(new EventHandler() {
+            public void handle(Event e) {
+                scene.setCursor(Cursor.HAND);
+            }
+        });
+        
+        register.setOnMouseExited(new EventHandler() {
+            public void handle(Event e) {
+                scene.setCursor(Cursor.DEFAULT);
+            }
+        });
+        
         register.setOnAction(e -> {
             Registration registration = new Registration();
             registration.start(primaryStage);
         });
-
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        
+        login.setOnAction(e -> {
+        	// Add code here to retrieve login credentials + validate
+            Registration registration = new Registration();
+            registration.start(primaryStage);
+        });
     }
 }
