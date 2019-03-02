@@ -11,6 +11,18 @@ public class Building implements ApiObject {
 	private Boolean wheelchairAccessible;
 	private List<String> sections;	// i.e. East Wing, etc.
 	
+	public Building() {
+	}
+	
+	public Building(int buildingID, Organization organization, List<Room> rooms, String address, Boolean wheelchairAccessible, List<String> sections) {
+		this.buildingID = buildingID;
+		this.organization = organization;
+		this.rooms = rooms;
+		this.address = address;
+		this.wheelchairAccessible = wheelchairAccessible;
+		this.sections = sections;
+	}
+	
 	@Override
 	public int getID() {
 		return this.buildingID;
@@ -24,7 +36,7 @@ public class Building implements ApiObject {
 	}
 
 	/**
-	 * @param organization the organization to set
+	 * @param organisation the organization to set
 	 */
 	public void setOrganization(Organization org) {
 		this.organization = org;

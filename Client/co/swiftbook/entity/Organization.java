@@ -8,6 +8,17 @@ public class Organization implements ApiObject {
 	private String organizationName;
 	private List<Building> buildings;
 	
+	
+	public Organization() {
+	}
+	
+	public Organization(int organizationId, String organizationName, List<Building> buildings) {
+		this.organizationID = organizationId;
+		this.organizationName = organizationName;
+		this.buildings = buildings;
+	}
+	
+	
 	@Override
 	public int getID() {
 		return this.organizationID;

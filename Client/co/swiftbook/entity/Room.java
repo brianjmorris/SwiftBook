@@ -10,6 +10,19 @@ public class Room implements ApiObject {
 	private String buildingSection;
 	private String roomType; // classroom, conference room, etc.
 	
+	public Room() {
+	}
+	
+	public Room(int roomID, Building building, String name, String roomNumber, String floorNumber, String buildingSection, String roomType) {
+		this.roomID = roomID;
+		this.building = building;
+		this.name = name;
+		this.roomNumber = roomNumber;
+		this.buildingSection = buildingSection;
+		this.roomType = roomType;
+	}
+	
+	
 	@Override
 	public int getID() {
 		return this.roomID;
