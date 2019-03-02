@@ -110,6 +110,7 @@ public class Registration extends Application {
             }
         });
         
+        
         primaryStage.setScene(scene);
         primaryStage.show();
     }
