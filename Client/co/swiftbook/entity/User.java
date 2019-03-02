@@ -8,6 +8,7 @@ public class User implements ApiObject {
 	private String email;
 	private String firstName;
 	private String lastName;
+	private String hash;
 	private boolean administrator;
 
 	/**
@@ -108,7 +109,7 @@ public class User implements ApiObject {
 	 * @param hash the hash to set
 	 */
 	public void setHash(String hash) {
-		Hash = hash;
+		this.hash = hash;
 	}
 
 	/**
