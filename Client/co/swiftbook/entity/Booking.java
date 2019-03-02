@@ -2,13 +2,18 @@ package co.swiftbook.entity;
 
 public class Booking implements ApiObject {
 
-	private int bookingId;
+	private int bookingID;
 	private User user;
 	private Room room;
 	
+	public Booking(User user, Room room) {
+		this.user = user;
+		this.room = room;
+	}
+	
 	@Override
 	public int getID() {
-		return this.bookingId;
+		return this.bookingID;
 	}
 
 	/**

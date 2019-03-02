@@ -11,11 +11,7 @@ public class Building implements ApiObject {
 	private Boolean wheelchairAccessible;
 	private List<String> sections;	// i.e. East Wing, etc.
 	
-	public Building() {
-	}
-	
-	public Building(int buildingID, Organization organization, List<Room> rooms, String address, Boolean wheelchairAccessible, List<String> sections) {
-		this.buildingID = buildingID;
+	public Building(Organization organization, List<Room> rooms, String address, Boolean wheelchairAccessible, List<String> sections) {
 		this.organization = organization;
 		this.rooms = rooms;
 		this.address = address;

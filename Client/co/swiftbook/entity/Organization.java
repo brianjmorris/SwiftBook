@@ -8,12 +8,11 @@ public class Organization implements ApiObject {
 	private String organizationName;
 	private List<Building> buildings;
 	
-	
-	public Organization() {
+	public Organization(String organizationName) {
+		this.organizationName = organizationName;
 	}
 	
-	public Organization(int organizationId, String organizationName, List<Building> buildings) {
-		this.organizationID = organizationId;
+	public Organization(String organizationName, List<Building> buildings) {
 		this.organizationName = organizationName;
 		this.buildings = buildings;
 	}

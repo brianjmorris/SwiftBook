@@ -10,11 +10,7 @@ public class Room implements ApiObject {
 	private String buildingSection;
 	private String roomType; // classroom, conference room, etc.
 	
-	public Room() {
-	}
-	
-	public Room(int roomID, Building building, String name, String roomNumber, String floorNumber, String buildingSection, String roomType) {
-		this.roomID = roomID;
+	public Room(Building building, String name, String roomNumber, String floorNumber, String buildingSection, String roomType) {
 		this.building = building;
 		this.name = name;
 		this.roomNumber = roomNumber;
