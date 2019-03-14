@@ -110,8 +110,7 @@ public class Login extends Application {
         });
         
         login.setOnAction(e -> {
-        	// Add code here to retrieve login credentials + validate
-    		
+        	// Retrieve login credentials + validate
     		User currentUser = userClient.getByUsername(username.getText());
     		
     		if(currentUser == null) {
