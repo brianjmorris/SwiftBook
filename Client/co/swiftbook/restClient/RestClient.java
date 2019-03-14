@@ -2,24 +2,21 @@ package co.swiftbook.restClient;
 
 import java.io.*;
 import java.net.*;
-import java.util.*;
 
 import com.google.gson.*;
 
 import co.swiftbook.entity.ApiObject;
 import co.swiftbook.exception.RestClientException;
 
-import org.mindrot.jbcrypt.BCrypt;
-
 public abstract class RestClient<T> {
 
 	protected String address = "https://swiftbook.co/api/";
 	protected String[] booleanFields = {
-		"Administrator"	
+		"administrator"	
 	};
 	
-	private Class entityClass;
-	private Class entityArrayClass;
+	protected Class entityClass;
+	protected Class entityArrayClass;
 	
 	public RestClient(Class entityClass, Class entityArrayClass) {
 		this.entityClass = entityClass;

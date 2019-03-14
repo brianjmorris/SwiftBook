@@ -1,27 +1,32 @@
 package co.swiftbook.restClient;
 
-import org.mindrot.jbcrypt.*;
-
-import com.google.gson.*;
+import java.util.Scanner;
 
 import co.swiftbook.entity.Organization;
 import co.swiftbook.entity.User;
 
 public class TestLogin {
 
+	// TODO: fix BCrypt "invalid salt version"
 	public static void main(String[] args) {
-		String salt = BCrypt.gensalt();
-		String hash = BCrypt.hashpw("Password1", salt);
+		UserClient userClient = new UserClient();
+		Scanner in = new Scanner(System.in);
 		
-		System.out.println(hash);
-		System.out.println("Length: " +  hash.length());
+		System.out.print("Username: ");
+		String username = in.next();
 
-		User newUser = new User("TestUser", "test@email.com", "Glenn", "Smith", new Organization("Test Organization"), false);
-		newUser.setHash(hash);
+		User newUser = new User(username, "test@email.com", "FirstName", "LastName", 
+				new Organization("Test Organization"), false);
 		
-		Gson gson = new Gson();
-		String userJson = gson.toJson(newUser);
-		System.out.println("User: " + userJson);
+		System.out.print("Password: ");
+		
+		if(userClient.login(newUser, in.next())) {
+			System.out.println("\nSuccessful login");
+		} else {
+			System.out.println("\nFailed login");
+		}
+		
+		in.close();
 	}
 
 }

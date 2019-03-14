@@ -1,5 +1,7 @@
 package co.swiftbook.view;
 
+import co.swiftbook.entity.User;
+import co.swiftbook.restClient.UserClient;
 import javafx.application.Application;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -18,7 +20,11 @@ import javafx.scene.*;
 
 public class Login extends Application {
 	
+	private static UserClient userClient;
+	
     public static void main(String[] args) {
+    	userClient = new UserClient();
+    	
     	launch(args);
     }
     
@@ -105,8 +111,26 @@ public class Login extends Application {
         
         login.setOnAction(e -> {
         	// Add code here to retrieve login credentials + validate
-            Registration registration = new Registration();
-            registration.start(primaryStage);
+    		
+    		User currentUser = userClient.getByUsername(username.getText());
+    		
+    		if(currentUser == null) {
+          		System.out.println("User not found");
+
+        		username.clear();
+        		password.clear();
+          		return;
+          	} else if (userClient.login(currentUser, password.getText())) {
+                Registration registration = new Registration();
+                registration.start(primaryStage);
+    		} else {
+          		System.out.println("Username and password do not match");
+
+        		username.clear();
+        		password.clear();
+    			return;
+    		}
+        	
         });
     }
 }

@@ -106,6 +106,13 @@ public class User implements ApiObject {
 	}
 
 	/**
+	 * @return the hash
+	 */
+	public String getHash() {
+		return hash;
+	}
+
+	/**
 	 * @param hash the hash to set
 	 */
 	public void setHash(String hash) {
