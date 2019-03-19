@@ -1,5 +1,5 @@
 
-package co.swiftbook.restClient;
+package co.swiftbook.apiClient;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -14,9 +14,9 @@ import com.google.gson.Gson;
 import co.swiftbook.entity.User;
 import co.swiftbook.exception.RestClientException;
 
-public class UserClient extends RestClient<User> {
+public class UserApiClient extends ApiClient<User> {
 
-	public UserClient() {
+	public UserApiClient() {
 		super(User.class, User[].class);
 	}
 	

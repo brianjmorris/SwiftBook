@@ -1,4 +1,4 @@
-package co.swiftbook.restClient;
+package co.swiftbook.apiClient;
 
 import java.util.Scanner;
 
@@ -9,7 +9,7 @@ public class TestLogin {
 
 	// TODO: fix BCrypt "invalid salt version"
 	public static void main(String[] args) {
-		UserClient userClient = new UserClient();
+		UserApiClient userApiClient = new UserApiClient();
 		Scanner in = new Scanner(System.in);
 		
 		System.out.print("Username: ");
@@ -20,7 +20,7 @@ public class TestLogin {
 		
 		System.out.print("Password: ");
 		
-		if(userClient.login(newUser, in.next())) {
+		if(userApiClient.login(newUser, in.next())) {
 			System.out.println("\nSuccessful login");
 		} else {
 			System.out.println("\nFailed login");

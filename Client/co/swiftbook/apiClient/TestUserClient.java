@@ -1,4 +1,4 @@
-package co.swiftbook.restClient;
+package co.swiftbook.apiClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,11 +10,11 @@ public class TestUserClient {
 	public static void main(String[] args) {
 		
 		// create an API client object
-		UserClient userClient = new UserClient();
+		UserApiClient userApiClient = new UserApiClient();
 		
 		// create a new user
 		User newUser = new User("TestUser", "test@email.com", "Glenn", "Smith", new Organization("Test Organization"), false);
-		if(userClient.create(newUser)) {
+		if(userApiClient.create(newUser)) {
 			System.out.println("Created User: " + newUser);
 		}
 		
@@ -26,7 +26,7 @@ public class TestUserClient {
 		}
 		
 		// get a user by username
-		User userByUsername = userClient.getByUsername("TestUser");
+		User userByUsername = userApiClient.getByUsername("TestUser");
 		System.out.println("\nRetrieved User: " + userByUsername.getUsername() + " - " + userByUsername);
 		
 		try {
@@ -38,7 +38,7 @@ public class TestUserClient {
 		
 		// update a user
 		userByUsername.setFirstName("Alasdair");
-		if(userClient.update(userByUsername)) {
+		if(userApiClient.update(userByUsername)) {
 			System.out.println("\nUpdated User: " + userByUsername.getUsername() + " - " + userByUsername);
 		}
 		
@@ -50,7 +50,7 @@ public class TestUserClient {
 		}
 		
 		// get a user by id
-		User userById = userClient.get(userByUsername.getID());
+		User userById = userApiClient.get(userByUsername.getID());
 		System.out.println("\nRetrieved User " + userById.getID() + ": " + userById.getUsername() + " - " + userById);
 		
 		try {
@@ -62,7 +62,7 @@ public class TestUserClient {
 
 		// get all users
 //		ArrayList<User> users = userClient.getAll();
-		User[] users = userClient.getAll();
+		User[] users = userApiClient.getAll();
 		
 		System.out.println("\nAll Users:");
 		for(int i = 0; i < users.length; i++) {
@@ -70,7 +70,7 @@ public class TestUserClient {
 		}
 		
 		// delete a user
-		if(userClient.delete(userByUsername.getID())) {
+		if(userApiClient.delete(userByUsername.getID())) {
 			System.out.println("\nDeleted User: " + userByUsername);
 		}
 		
@@ -81,7 +81,7 @@ public class TestUserClient {
 			e.printStackTrace();
 		}
 		
-		User[] usersAgain = userClient.getAll();
+		User[] usersAgain = userApiClient.getAll();
 		
 		System.out.println("\nAll Users:");
 		for(int i = 0; i < usersAgain.length; i++) {

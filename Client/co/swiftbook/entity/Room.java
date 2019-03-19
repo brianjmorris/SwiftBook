@@ -1,8 +1,10 @@
 package co.swiftbook.entity;
 
-public class Room implements ApiObject {
+import co.swiftbook.exception.ApiObjectException;
+
+public class Room extends ApiObject {
 	
-	private int roomID;
+	private int roomID = -1;
 	private Building building;
 	private String name;
 	private String roomNumber;
@@ -10,18 +12,29 @@ public class Room implements ApiObject {
 	private String buildingSection;
 	private String roomType; // classroom, conference room, etc.
 	
-	public Room(Building building, String name, String roomNumber, String floorNumber, String buildingSection, String roomType) {
-		this.building = building;
-		this.name = name;
-		this.roomNumber = roomNumber;
-		this.buildingSection = buildingSection;
-		this.roomType = roomType;
+	public Room(Building building, String name, String roomNumber, 
+			String floorNumber, String buildingSection, String roomType) {
+		setBuilding(building);
+		setName(name);
+		setRoomNumber(roomNumber);
+		setBuildingSection(buildingSection);
+		setRoomType(roomType);
 	}
-	
-	
+
+	/**
+	 * @return the roomID
+	 */
 	@Override
 	public int getID() {
 		return this.roomID;
+	}
+
+	/**
+	 * @param id the roomID to set
+	 */
+	@Override
+	protected void setID(int id) {
+		this.roomID = id;
 	}
 
 	/**
@@ -35,6 +48,9 @@ public class Room implements ApiObject {
 	 * @param building the building to set
 	 */
 	public void setBuilding(Building building) {
+		if(building.getID() < 0)
+			throw new ApiObjectException("Building does not have an ID");
+		
 		this.building = building;
 	}
 
@@ -106,6 +122,16 @@ public class Room implements ApiObject {
 	 */
 	public void setRoomType(String roomType) {
 		this.roomType = roomType;
+	}
+
+
+	@Override
+	public String toJson() {
+		String str = "{ ";
+		str += this.getID();
+		str += " }";
+		
+		return str;
 	}
 	
 }

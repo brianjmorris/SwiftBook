@@ -2,26 +2,42 @@ package co.swiftbook.entity;
 
 import java.util.List;
 
-public class Building implements ApiObject {
+import co.swiftbook.exception.ApiObjectException;
 
-	private int buildingID;
+public class Building extends ApiObject {
+
+	private int buildingID = -1;
 	private Organization organization;
 	private List<Room> rooms;
 	private String address;
 	private Boolean wheelchairAccessible;
-	private List<String> sections;	// i.e. East Wing, etc.
+	private String sections;	// i.e. East Wing, etc.
 	
-	public Building(Organization organization, List<Room> rooms, String address, Boolean wheelchairAccessible, List<String> sections) {
-		this.organization = organization;
-		this.rooms = rooms;
-		this.address = address;
-		this.wheelchairAccessible = wheelchairAccessible;
-		this.sections = sections;
+	public Building(Organization org, List<Room> rooms, 
+			String address, Boolean wheelchairAccessible, String sections) {
+		setOrganization(org);
+		setAddress(address);
+		setWheelchairAccessible(wheelchairAccessible);
+		setSections(sections);
+		
+		for(int i = 0; i < rooms.size(); i++)
+			addRoom(rooms.get(i));
 	}
-	
+
+	/**
+	 * @return the buildingID
+	 */
 	@Override
 	public int getID() {
 		return this.buildingID;
+	}
+
+	/**
+	 * @param id the buildingID to set
+	 */
+	@Override
+	protected void setID(int id) {
+		this.buildingID = id;
 	}
 
 	/**
@@ -35,6 +51,9 @@ public class Building implements ApiObject {
 	 * @param organisation the organization to set
 	 */
 	public void setOrganization(Organization org) {
+		if(org.getID() < 0)
+			throw new ApiObjectException("Organization does not have an ID");
+		
 		this.organization = org;
 	}
 
@@ -49,6 +68,9 @@ public class Building implements ApiObject {
 	 * @param room the room to add
 	 */
 	public void addRoom(Room room) {
+		if(room.getID() < 0)
+			throw new ApiObjectException("Room does not have an ID");
+		
 		this.rooms.add(room);
 	}
 
@@ -90,22 +112,24 @@ public class Building implements ApiObject {
 	/**
 	 * @return the sections
 	 */
-	public List<String> getSections() {
+	public String getSections() {
 		return sections;
 	}
 
 	/**
-	 * @param section the section to add
+	 * @param sections the sections to set
 	 */
-	public void addSection(String section) {
-		this.sections.add(section);
+	public void setSections(String sections) {
+		this.sections = sections;
 	}
 
-	/**
-	 * @param section the section to remove
-	 */
-	public void removeSection(String section) {
-		this.sections.remove(section);
+	@Override
+	public String toJson() {
+		String str = "{ ";
+		str += this.getID();
+		str += " }";
+		
+		return str;
 	}
 	
 }

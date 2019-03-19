@@ -1,4 +1,4 @@
-package co.swiftbook.restClient;
+package co.swiftbook.apiClient;
 
 import java.io.*;
 import java.net.*;
@@ -8,7 +8,7 @@ import com.google.gson.*;
 import co.swiftbook.entity.ApiObject;
 import co.swiftbook.exception.RestClientException;
 
-public abstract class RestClient<T> {
+public abstract class ApiClient<T extends ApiObject> {
 
 	protected String address = "https://swiftbook.co/api/";
 	protected String[] booleanFields = {
@@ -18,7 +18,7 @@ public abstract class RestClient<T> {
 	protected Class entityClass;
 	protected Class entityArrayClass;
 	
-	public RestClient(Class entityClass, Class entityArrayClass) {
+	public ApiClient(Class entityClass, Class entityArrayClass) {
 		this.entityClass = entityClass;
 		this.entityArrayClass = entityArrayClass;
 		

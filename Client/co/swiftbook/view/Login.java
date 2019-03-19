@@ -1,7 +1,7 @@
 package co.swiftbook.view;
 
 import co.swiftbook.entity.User;
-import co.swiftbook.restClient.UserClient;
+import co.swiftbook.apiClient.UserApiClient;
 import javafx.application.Application;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -20,10 +20,10 @@ import javafx.scene.*;
 
 public class Login extends Application {
 	
-	private static UserClient userClient;
+	private static UserApiClient userApiClient;
 	
     public static void main(String[] args) {
-    	userClient = new UserClient();
+    	userApiClient = new UserApiClient();
     	
     	launch(args);
     }
@@ -41,6 +41,7 @@ public class Login extends Application {
         Group elements = new Group();
         
         // Logo and Software Name
+        // TODO change image to local file
         Image softwareName = new Image("https://raw.githubusercontent.com/amanda-anderson/resources/master/swiftbook.png", 0, 115, true, true);
         ImageView imageView = new ImageView();
         imageView.setImage(softwareName);
@@ -111,7 +112,7 @@ public class Login extends Application {
         
         login.setOnAction(e -> {
         	// Retrieve login credentials + validate
-    		User currentUser = userClient.getByUsername(username.getText());
+    		User currentUser = userApiClient.getByUsername(username.getText());
     		
     		if(currentUser == null) {
           		System.out.println("User not found");
@@ -119,7 +120,7 @@ public class Login extends Application {
         		username.clear();
         		password.clear();
           		return;
-          	} else if (userClient.login(currentUser, password.getText())) {
+          	} else if (userApiClient.login(currentUser, password.getText())) {
                 Registration registration = new Registration();
                 registration.start(primaryStage);
     		} else {

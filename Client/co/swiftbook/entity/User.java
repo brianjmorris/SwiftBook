@@ -1,8 +1,10 @@
 package co.swiftbook.entity;
 
-public class User implements ApiObject {
+import co.swiftbook.exception.ApiObjectException;
 
-	private int userID;
+public class User extends ApiObject {
+
+	private int userID = -1;
 	private Organization organization;
 	private String username;
 	private String email;
@@ -22,17 +24,28 @@ public class User implements ApiObject {
 	 */
 	public User(String username, String email, String firstName,
 			String lastName, Organization org, boolean administrator) {
-		this.username = username;
-		this.email = email;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.organization = org;
-		this.administrator = administrator;
+		setUsername(username);
+		setEmail(email);
+		setFirstName(firstName);
+		setLastName(lastName);
+		setOrganization(org);
+		setAdministrator(administrator);
 	}
 
+	/**
+	 * @return the userID
+	 */
 	@Override
 	public int getID() {
 		return this.userID;
+	}
+
+	/**
+	 * @param id the userID to set
+	 */
+	@Override
+	protected void setID(int id) {
+		this.userID = id;
 	}
 
 	/**
@@ -46,6 +59,9 @@ public class User implements ApiObject {
 	 * @param organization the organization to set
 	 */
 	public void setOrganization(Organization org) {
+		if(org.getID() < 0)
+			throw new ApiObjectException("Organization does not have an ID");
+		
 		this.organization = org;
 	}
 
@@ -131,6 +147,15 @@ public class User implements ApiObject {
 	 */
 	public void setAdministrator(boolean administrator) {
 		this.administrator = administrator;
+	}
+
+	@Override
+	public String toJson() {
+		String str = "{ ";
+		str += this.getID();
+		str += " }";
+		
+		return str;
 	}
 
 }
