@@ -13,7 +13,7 @@ $hashTablename = "Hash";
 // table columns, id column needs to be first
 $userColumns = [
   "userID",
-  // "organization",
+  // "organizationID",
   "username",
   "email",
   "firstName",
@@ -51,7 +51,7 @@ $columnCount = count($userColumns);
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // POST request received at https://swiftbook.co/api/User
 
-    if($_GET["login"] === "true" || $requestBody["login"] === "true") {
+    if ($_GET["login"] === "true" || $requestBody["login"] === "true") {
         // Login POST request received
         // https://swiftbook.co/api/User/Login
         try {
@@ -68,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // Statement executed successfully
                 $userRow = $userIDStmt->fetch();
 
-                if($userRow[$userColumns[0]]) {
+                if ($userRow[$userColumns[0]]) {
                     // Construct SELECT query
                     $hashStmtString = "SELECT " . $hashColumns[1] . " FROM "
                     . $hashTablename . " WHERE " . $userColumns[0] . " = "
@@ -82,8 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         // Statement executed successfully
                         $hashRow = $hashStmt->fetch();
 
-                        if($hashRow[$hashColumns[1]]) {
-
+                        if ($hashRow[$hashColumns[1]]) {
                             echo $hashRow[$hashColumns[1]];
 
                             // set response code
