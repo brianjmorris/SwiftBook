@@ -1,14 +1,30 @@
 # Enable Rewrite Engine
 RewriteEngine On
 
+# redirect /api/Booking/1 to /api/Booking/index.php?bookingID=1
+RewriteRule ^Booking([0-9]+)$ https://swiftbook.co/api/Booking/index.php?bookingID=$1
+RewriteRule ^Booking/([0-9]+)$ https://swiftbook.co/api/Booking/index.php?bookingID=$1
+
+# redirect /api/Building/1 to /api/Building/index.php?buildingID=1
+RewriteRule ^Building([0-9]+)$ https://swiftbook.co/api/Building/index.php?buildingID=$1
+RewriteRule ^Building/([0-9]+)$ https://swiftbook.co/api/Building/index.php?buildingID=$1
+
+# redirect /api/Organization/1 to /api/Organization/index.php?organizationID=1
+RewriteRule ^Organization([0-9]+)$ https://swiftbook.co/api/Organization/index.php?organizationID=$1
+RewriteRule ^Organization/([0-9]+)$ https://swiftbook.co/api/Organization/index.php?organizationID=$1
+
+# redirect /api/Room/1 to /api/Room/index.php?roomID=1
+RewriteRule ^Room([0-9]+)$ https://swiftbook.co/api/Room/index.php?roomID=$1
+RewriteRule ^Room/([0-9]+)$ https://swiftbook.co/api/Room/index.php?roomID=$1
+
 # redirect /api/User/1 to /api/User/index.php?userID=1
-RewriteRule ^User([0-9]+)$ User/index.php?userID=$1
-RewriteRule ^User/([0-9]+)$ User/index.php?userID=$1
+RewriteRule ^User([0-9]+)$ https://swiftbook.co/api/User/index.php?userID=$1
+RewriteRule ^User/([0-9]+)$ https://swiftbook.co/api/User/index.php?userID=$1
 
 # redirect /api/User/ByUsername/brianjmorris to /api/User/index.php?username=brianjmorris
-RewriteRule ^User/ByUsername([a-zA-Z0-9]+)$ User/index.php?username=$1
-RewriteRule ^User/ByUsername/([a-zA-Z0-9]+)$ User/index.php?username=$1
+RewriteRule ^User/ByUsername([a-zA-Z0-9]+)$ https://swiftbook.co/api/User/index.php?username=$1
+RewriteRule ^User/ByUsername/([a-zA-Z0-9]+)$ https://swiftbook.co/api/User/index.php?username=$1
 
 # redirect /api/User/Login to /api/Login
-RewriteRule ^User/Login User/index.php?login=true
-RewriteRule ^User/Login/ User/index.php?login=true
+RewriteRule ^User/Login https://swiftbook.co/api/Login
+RewriteRule ^User/Login/ https://swiftbook.co/api/Login/

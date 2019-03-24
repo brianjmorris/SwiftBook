@@ -11,18 +11,29 @@ import co.swiftbook.exception.RestClientException;
 public abstract class ApiClient<T extends ApiObject> {
 
 	protected String address = "https://swiftbook.co/api/";
-	protected String[] booleanFields = {
-		"administrator"	
-	};
+	protected String[] booleanFields;
 	
 	protected Class entityClass;
 	protected Class entityArrayClass;
+	protected Gson gson;
 	
-	public ApiClient(Class entityClass, Class entityArrayClass) {
+	public ApiClient(Class entityClass, Class entityArrayClass, String[] booleanFields) {
+		gson = new Gson();
+		
+		this.entityClass = entityClass;
+		this.entityArrayClass = entityArrayClass;
+		this.booleanFields = booleanFields;
+		
+		this.address += this.entityClass.getSimpleName() + "/";
+	}
+	
+	public ApiClient(Class entityClass, Class entityArrayClass, String endpoint) {
+		gson = new Gson();
+		
 		this.entityClass = entityClass;
 		this.entityArrayClass = entityArrayClass;
 		
-		this.address += this.entityClass.getSimpleName() + "/";
+		this.address += endpoint + "/";
 	}
 
 	public T[] getAll() {
@@ -30,9 +41,7 @@ public abstract class ApiClient<T extends ApiObject> {
 //		ArrayList<T> result = null;
 		T[] result = null;
 
-		try {			
-			Gson gson = new Gson();
-
+		try {
 			URL url = new URL(address);
 
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -54,11 +63,8 @@ public abstract class ApiClient<T extends ApiObject> {
 				}
 			}
 
-			String jsonString = jsonStringBuilder.toString();
-			jsonString = intsToBooleans(jsonString);
+			result = jsonToArray(jsonStringBuilder.toString());
 			
-			result = (T[]) gson.fromJson(jsonString, this.entityArrayClass);
-
 			conn.disconnect();
 
 		} catch (Exception e) {
@@ -72,9 +78,7 @@ public abstract class ApiClient<T extends ApiObject> {
 		
 		T result = null;
 
-		try {		
-			Gson gson = new Gson();
-
+		try {
 			URL url = new URL(address + i);
 
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -83,8 +87,12 @@ public abstract class ApiClient<T extends ApiObject> {
 			conn.setRequestProperty("Content-Type", "application/json");
 
 			if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
-				throw new Exception("Could not retrieve object, received code "
-						+ conn.getResponseCode());
+				if(conn.getResponseCode() == HttpURLConnection.HTTP_NO_CONTENT) {
+					return null;
+				} else {
+					throw new Exception("Could not retrieve object, received code "
+							+ conn.getResponseCode());
+				}
 			}
 
 			StringBuilder jsonStringBuilder = new StringBuilder();
@@ -95,11 +103,8 @@ public abstract class ApiClient<T extends ApiObject> {
 					jsonStringBuilder.append(input);
 				}
 			}
-
-			String jsonString = jsonStringBuilder.toString();
-			jsonString = intsToBooleans(jsonString);
 			
-			T[] temp = (T[]) gson.fromJson(jsonString, this.entityArrayClass);
+			T[] temp = jsonToArray(jsonStringBuilder.toString());
 			
 			if(0 < temp.length) {
 				result = temp[0];
@@ -114,13 +119,11 @@ public abstract class ApiClient<T extends ApiObject> {
 		return result;
 	}
 
-	public boolean create(T newObject) {
+	public T create(T newObject) {
 		
-		boolean success = true;
+		T result = null;
 		
 		try {
-			Gson gson = new Gson();
-			
 			URL url = new URL(address);
 
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -128,57 +131,64 @@ public abstract class ApiClient<T extends ApiObject> {
 			conn.setRequestMethod("POST");
 			conn.setRequestProperty("Content-Type", "application/json");
 
-			String newUserString = gson.toJson(newObject, entityClass);
+			String newObjectString = newObject.toJson();
 
 			OutputStream out = conn.getOutputStream();
-			out.write(newUserString.getBytes());
+			out.write(newObjectString.getBytes());
 			out.flush();
 
 			if (conn.getResponseCode() != HttpURLConnection.HTTP_CREATED) {
-				success = false;
 				throw new Exception("Error creating object, received code "
 						+ conn.getResponseCode());
 			}
 
+			StringBuilder jsonStringBuilder = new StringBuilder();
+			String input = null;
+
+			try (BufferedReader buffer = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {	
+				while ((input = buffer.readLine()) != null) {
+					jsonStringBuilder.append(input);
+				}
+			}
+			
+			result = jsonToObject(jsonStringBuilder.toString());
+
 			conn.disconnect();
 
 		} catch (Exception e) {
-			success = false;
 			throw new RestClientException(e.getMessage());
 		}
 
-		return success;
+		return result;
 	}
 
-	public boolean update(T newObject) {
+	public boolean update(T object) {
 		
 		boolean success = true;
 		
 		try {
-			if(get(((ApiObject)newObject).getID()) == null) {
+			if(get(object.getID()) == null) {
 				success = false;
-				throw new RestClientException("User does not exist");
+				throw new RestClientException("Object ID does not exist in database");
 			}
 			
-			Gson gson = new Gson();
-
-			URL url = new URL(address + ((ApiObject)newObject).getID());
+			URL url = new URL(address + object.getID());
 
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setDoOutput(true);
 			conn.setRequestMethod("PUT");
 			conn.setRequestProperty("Content-Type", "application/json");
 
-			String newUserString = gson.toJson(newObject, entityClass);
+			String newObjectString = object.toJson();
 
 			OutputStream out = conn.getOutputStream();
-			out.write(newUserString.getBytes());
+			out.write(newObjectString.getBytes());
 			out.flush();
 
 			if (conn.getResponseCode() != HttpURLConnection.HTTP_NO_CONTENT) {
 				success = false;
 				
-				throw new RestClientException("Error updating user, received code "
+				throw new RestClientException("Error updating object, received code "
 						+ conn.getResponseCode());
 				
 			}
@@ -207,7 +217,7 @@ public abstract class ApiClient<T extends ApiObject> {
 
 			if (conn.getResponseCode() != HttpURLConnection.HTTP_NO_CONTENT) {
 				success = false;
-				throw new Exception("Error deleting user, received code "
+				throw new Exception("Error deleting object, received code "
 						+ conn.getResponseCode());
 			}
 
@@ -220,8 +230,42 @@ public abstract class ApiClient<T extends ApiObject> {
 
 		return success;
 	}
+	
+	protected T jsonToObject(String object) {
 
-	protected String intsToBooleans(String str) {
+		object = convertBooleans(object);
+		
+		return (T) gson.fromJson(object, this.entityClass);
+	}
+	
+	protected T[] jsonToArray(String objects) {
+
+		objects = convertBooleans(objects);
+		
+		return (T[]) gson.fromJson(objects, this.entityArrayClass);
+	}
+	
+	protected int getReferenceIDFromJson(String idField, String object, int startIndex) {
+		Boolean firstField = false;
+		int indexBefore = object.indexOf(",\"" + idField + "\":", startIndex);
+		if(indexBefore < 0) {
+			firstField = true;
+			indexBefore = object.indexOf("\"" + idField + "\":", startIndex);
+		}
+
+		int indexAfter = object.indexOf(",", indexBefore + idField.length() + (firstField?3:4));
+		if(indexAfter < 0) {
+			indexAfter = object.indexOf("}", indexBefore + idField.length() + (firstField?3:4));
+		}
+		
+		String idString = object.substring(indexBefore + idField.length() + (firstField?3:4), indexAfter);
+		idString = idString.replace('\"', ' ');
+		idString = idString.trim();
+		
+		return Integer.parseInt(idString);
+	}
+
+	protected String convertBooleans(String str) {
 		for(int i = 0; i < this.booleanFields.length; i++) {
 			String temp = "\"" + this.booleanFields[i] + "\":";
 			str = str.replaceAll(temp + "0", temp + "\"false\"");

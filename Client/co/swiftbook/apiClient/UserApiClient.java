@@ -3,76 +3,61 @@ package co.swiftbook.apiClient;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
-import org.mindrot.jbcrypt.*;
-
-import com.google.gson.Gson;
+import java.util.ArrayList;
 
 import co.swiftbook.entity.User;
 import co.swiftbook.exception.RestClientException;
 
 public class UserApiClient extends ApiClient<User> {
+	
+	private OrganizationApiClient organizationApiClient;
 
 	public UserApiClient() {
-		super(User.class, User[].class);
+		super(User.class, User[].class, new String[] { "administrator" });
+		organizationApiClient = new OrganizationApiClient();
 	}
-	
-	public boolean login(User user, String password) {
-		try {		
-			Gson gson = new Gson();
 
-			URL url = new URL(this.address + "Login/");
+	@Override
+	public User jsonToObject(String object) {
+		object = convertBooleans(object);
+		
+		User user = (User) gson.fromJson(object, this.entityClass);
+		
+		int organizationID = getReferenceIDFromJson("organizationID", object, 0);
+		user.setOrganization(organizationApiClient.get(organizationID));
+		
+		return user;
+	}
 
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			conn.setDoOutput(true);
-			conn.setRequestMethod("POST");
-			conn.setRequestProperty("Content-Type", "application/json");
+	@Override
+	public User[] jsonToArray(String objects) {
 
-			String newUserString = gson.toJson(user, this.entityClass);
-
-			OutputStream out = conn.getOutputStream();
-			out.write(newUserString.getBytes());
-			out.flush();
-
-			if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
-				if(conn.getResponseCode() == 418) {
-					return false;
-				} else {
-					throw new RestClientException("Could not login, received code "
-							+ conn.getResponseCode());
-				}
-			}
-
-			StringBuilder jsonStringBuilder = new StringBuilder();
-			String input = null;
-
-			try (BufferedReader buffer = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
-				
-				while ((input = buffer.readLine()) != null) {
-					jsonStringBuilder.append(input);
-				}
-				
-				Boolean valid = BCrypt.checkpw(password, jsonStringBuilder.toString());
-				
-				conn.disconnect();
-				
-				return valid;
-			}
-
-		} catch (Exception e) {
-			throw new RestClientException(e.getMessage());
+		objects = convertBooleans(objects);
+		
+		ArrayList<Integer> organizations = new ArrayList<Integer>();
+		
+		int openingBracket = objects.indexOf("{");
+		while(0 < openingBracket) {
+			organizations.add(getReferenceIDFromJson("organizationID", objects, openingBracket));
+			
+			openingBracket = objects.indexOf("{", openingBracket + 1);
 		}
+		
+		User[] users = (User[]) gson.fromJson(objects, this.entityArrayClass);
+		
+		for(int i = 0; i < users.length; i++) {
+			users[i].setOrganization(organizationApiClient.get(organizations.get(i)));
+		}
+		
+		return users;
 	}
 
 	public User getByUsername(String username) {
 		User result = null;
 
-		try {		
-			Gson gson = new Gson();
-
+		try {
 			URL url = new URL(this.address + "ByUsername/" + username);
 
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -81,8 +66,12 @@ public class UserApiClient extends ApiClient<User> {
 			conn.setRequestProperty("Content-Type", "application/json");
 
 			if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
-				throw new RestClientException("Could not retrieve user, received code "
-						+ conn.getResponseCode());
+				if(conn.getResponseCode() == HttpURLConnection.HTTP_NO_CONTENT) {
+					return null;
+				} else {
+					throw new Exception("Could not retrieve user, received code "
+							+ conn.getResponseCode());
+				}
 			}
 
 			StringBuilder jsonStringBuilder = new StringBuilder();
@@ -95,9 +84,9 @@ public class UserApiClient extends ApiClient<User> {
 			}
 
 			String jsonString = jsonStringBuilder.toString();
-			jsonString = intsToBooleans(jsonString);
-			
-			User[] temp = (User[]) gson.fromJson(jsonString, User[].class);
+			jsonString = convertBooleans(jsonString);
+
+			User[] temp = jsonToArray(jsonStringBuilder.toString());
 			
 			if(0 < temp.length) {
 				result = temp[0];

@@ -31,6 +31,21 @@ public class User extends ApiObject {
 		setOrganization(org);
 		setAdministrator(administrator);
 	}
+	
+	@Override
+	public String toJson() {
+		String json = "{ ";
+		json += "\"userID\" : \"" + this.getID() + "\", ";
+		json += "\"organizationID\" : \"" + this.getOrganization().getID() + "\", ";
+		json += "\"username\" : \"" + this.getUsername() + "\", ";
+		json += "\"email\" : \"" + this.getEmail() + "\", ";
+		json += "\"firstName\" : \"" + this.getFirstName() + "\", ";
+		json += "\"lastName\" : \"" + this.getLastName() + "\", ";
+		json += "\"hash\" : \"" + this.getHash() + "\", ";
+		json += "\"administrator\" : \"" + this.isAdministrator() + "\"";
+		json += " }";
+		return json;
+	}
 
 	/**
 	 * @return the userID
@@ -148,14 +163,10 @@ public class User extends ApiObject {
 	public void setAdministrator(boolean administrator) {
 		this.administrator = administrator;
 	}
-
+	
 	@Override
-	public String toJson() {
-		String str = "{ ";
-		str += this.getID();
-		str += " }";
-		
-		return str;
+	public String toString() {
+		return toJson();
 	}
 
 }

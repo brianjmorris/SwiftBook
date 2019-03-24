@@ -10,11 +10,11 @@ $password = "!2k#k?T7KhuHFEt@";
 $userTablename = "User";
 $hashTablename = "Hash";
 
-// table columns, id column needs to be first
+// table columns, id column needs to be first, username second
 $userColumns = [
   "userID",
-  // "organizationID",
   "username",
+  "organizationID",
   "email",
   "firstName",
   "lastName",
@@ -27,6 +27,8 @@ $hashColumns = [
 
 // end configuration
 /*****************************************************************************/
+
+// TODO use quotes for sql commands
 
 $options = [
   PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
@@ -51,136 +53,86 @@ $columnCount = count($userColumns);
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // POST request received at https://swiftbook.co/api/User
 
-    if ($_GET["login"] === "true" || $requestBody["login"] === "true") {
-        // Login POST request received
-        // https://swiftbook.co/api/User/Login
-        try {
-            // Construct SELECT query
-            $userIDStmtString = "SELECT " . $userColumns[0] . " FROM "
-            . $userTablename . " WHERE " . $userColumns[1] . " = '"
-            . $requestBody[$userColumns[1]] . "';";
+    // Begin a transaction, turning off autocommit
+    $pdo->beginTransaction();
 
-            // prepare the statement
-            $userIDStmt = $pdo->prepare($userIDStmtString);
-
-            // Execute query
-            if ($userIDStmt->execute()) {
-                // Statement executed successfully
-                $userRow = $userIDStmt->fetch();
-
-                if ($userRow[$userColumns[0]]) {
-                    // Construct SELECT query
-                    $hashStmtString = "SELECT " . $hashColumns[1] . " FROM "
-                    . $hashTablename . " WHERE " . $userColumns[0] . " = "
-                    . $userRow[$userColumns[0]] . ";";
-
-                    // prepare the statement
-                    $hashStmt = $pdo->prepare($hashStmtString);
-
-                    // Execute query
-                    if ($hashStmt->execute()) {
-                        // Statement executed successfully
-                        $hashRow = $hashStmt->fetch();
-
-                        if ($hashRow[$hashColumns[1]]) {
-                            echo $hashRow[$hashColumns[1]];
-
-                            // set response code
-                            http_response_code(200);
-                        } else {
-                            // set response code
-                            http_response_code(418);
-                        }
-                    } else {
-                        // set response code
-                        http_response_code(400);
-                    }
-                } else {
-                    // set response code
-                    http_response_code(418);
-                }
-            } else {
-                // set response code
-                http_response_code(400);
-            }
-        } catch (Exception $e) {
-            // Error executing statement, set response code
-            echo $e->getMessage();
-            http_response_code(400);
+    // Change the database schema and data
+    try {
+        // Construct INSERT query with placeholders (values are binded below)
+        $userStmtString = "INSERT INTO " . $userTablename . " (";
+        for ($i = 1; $i < $columnCount; $i++) {
+            $userStmtString .= $userColumns[$i] . ($i+1 == $columnCount ? "":", ");
         }
-    } else {
-        // Not logging in; Create a new user
+        $userStmtString .=  ") VALUES (";
+        for ($i = 1; $i < $columnCount; $i++) {
+            $userStmtString .= ":" . $userColumns[$i]
+           . ($i+1 == $columnCount ? "":", ");
+        }
+        $userStmtString .= ")";
 
-        // Begin a transaction, turning off autocommit
-        $pdo->beginTransaction();
+        // prepare the statement
+        $userStmt = $pdo->prepare($userStmtString);
 
-        // Change the database schema and data
-        try {
+        // bind values to statement
+        for ($i = 1; $i < $columnCount; $i++) {
+            $userStmt->bindParam(":" . $userColumns[$i], $requestBody[$userColumns[$i]]);
+        }
+
+        // Execute query
+        if ($userStmt->execute()) {
+            // Statement executed successfully
+
+            // get new user id
+            $new_id = $pdo->lastInsertId();
+
             // Construct INSERT query with placeholders (values are binded below)
-            $userStmtString = "INSERT INTO " . $userTablename . " (";
-            for ($i = 1; $i < $columnCount; $i++) {
-                $userStmtString .= $userColumns[$i] . ($i+1 == $columnCount ? "":", ");
-            }
-            $userStmtString .=  ") VALUES (";
-            for ($i = 1; $i < $columnCount; $i++) {
-                $userStmtString .= ":" . $userColumns[$i]
-                . ($i+1 == $columnCount ? "":", ");
-            }
-            $userStmtString .= ")";
+            $hashStmtString = "INSERT INTO " . $hashTablename . " ("
+                   . $hashColumns[0] . ", " . $hashColumns[1] . ") VALUES ("
+                   . ":" . $hashColumns[0] . ", :" . $hashColumns[1] . ")";
 
             // prepare the statement
-            $userStmt = $pdo->prepare($userStmtString);
+            $hashStmt = $pdo->prepare($hashStmtString);
 
             // bind values to statement
-            for ($i = 1; $i < $columnCount; $i++) {
-                $userStmt->bindParam(":" . $userColumns[$i], $requestBody[$userColumns[$i]]);
-            }
+            $hashStmt->bindParam(":" . $hashColumns[0], $new_id);
+            $hashStmt->bindParam(
+                    ":" . $hashColumns[1],
+                  $requestBody[$hashColumns[1]]
+                );
 
             // Execute query
-            if ($userStmt->execute()) {
-                // Statement executed successfully
+            if ($hashStmt->execute()) {
+                // commit changes to database
+                $pdo->commit();
 
-                // get new user id
-                $new_id = $pdo->lastInsertId();
+                // set response code 201 Created
+                http_response_code(201);
 
-                // Construct INSERT query with placeholders (values are binded below)
-                $hashStmtString = "INSERT INTO " . $hashTablename . " ("
-                   . $hashColumns[1][0] . ", " . $hashColumns[1][1] . ") VALUES ("
-                   . ":" . $hashColumns[1][0] . ", :" . $hashColumns[1][1] . ")";
+                // set response content type
+                header('Content-Type: application/json');
 
-                // prepare the statement
-                $hashStmt = $pdo->prepare($hashStmtString);
+                // return new object with ID set and no hash
+                $requestBody[$userColumns[0]] = $new_id;
+                unset($requestBody[$hashColumns[1]]);
+                echo json_encode($requestBody);
 
-                // bind values to statement
-                $hashStmt->bindParam(":" . $hashColumns[1][0], $new_id);
-                $hashStmt->bindParam(":" . $hashColumns[1][1], $requestBody[$hashColumns[1][1]]);
-
-                // Execute query
-                if ($hashStmt->execute()) {
-                    // commit changes to database
-                    $pdo->commit();
-
-                    // TODO fix Location header (not being set)
-                    // set location header pointing to new user
-                    header("Location: /api/User/" + $new_id);
-                    // set response code 201 Created
-                    http_response_code(201);
-                } else {
-                    throw new Exception('New Hash transaction failed');
-                }
+                // set location header pointing to new user
+                header("Location: https://swiftbook.co/api/User/" . $new_id);
             } else {
-                // Roll back changes
-                $pdo->rollBack();
-                // set response code 424 Failed Dependency
-                http_response_code(424);
+                throw new Exception('New Hash transaction failed');
             }
-        } catch (Exception $e) {
+        } else {
             // Roll back changes
             $pdo->rollBack();
-            // Error executing statement, set response code
-            // http_response_code(400);
-            echo $e->getMessage();
+            // set response code 424 Failed Dependency
+            http_response_code(418);
         }
+    } catch (Exception $e) {
+        // Roll back changes
+        $pdo->rollBack();
+        // Error executing statement, set response code
+        echo $e->getMessage();
+        http_response_code(418);
     }
 } elseif ($_SERVER['REQUEST_METHOD'] === 'PUT'
     && (isset($_GET[$userColumns[0]]) && !empty($_GET[$userColumns[0]]))) {
@@ -212,11 +164,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             http_response_code(204);
         } else {
             // set response code
-            http_response_code(400);
+            http_response_code(418);
         }
     } catch (Exception $e) {
         // Error executing statement, set response code
-        http_response_code(400);
+        http_response_code(418);
     }
 } elseif ($_SERVER['REQUEST_METHOD'] === 'DELETE'
     && (isset($_GET[$userColumns[0]]) && !empty($_GET[$userColumns[0]]))) {
@@ -240,11 +192,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             http_response_code(204);
         } else {
             // set response code
-            http_response_code(400);
+            http_response_code(418);
         }
     } catch (Exception $e) {
         // Error executing query, set response code
-        http_response_code(400);
+        http_response_code(418);
     }
 } elseif ($_SERVER['REQUEST_METHOD'] === 'GET'
     && (isset($_GET[$userColumns[0]]) && !empty($_GET[$userColumns[0]]))) {
@@ -284,15 +236,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 echo json_encode($resultArray);
             } else {
                 // No rows returned, set response code
-                http_response_code(404);
+                http_response_code(204);
             }
         } else {
             // set response code
-            http_response_code(400);
+            http_response_code(418);
         }
     } catch (Exception $e) {
         // Error executng query, set response code
-        http_response_code(400);
+        http_response_code(418);
     }
 } elseif ($_SERVER['REQUEST_METHOD'] === 'GET'
     && (isset($_GET[$userColumns[1]]) && !empty($_GET[$userColumns[1]]))) {
@@ -332,15 +284,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 echo json_encode($resultArray);
             } else {
                 // No rows returned, set response code
-                http_response_code(404);
+                http_response_code(204);
             }
         } else {
             // set response code
-            http_response_code(400);
+            http_response_code(418);
         }
     } catch (Exception $e) {
         // Error executng query, set response code
-        http_response_code(400);
+        http_response_code(418);
     }
 } elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
     // GET request received
@@ -375,13 +327,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         } else {
             // set response code
-            http_response_code(400);
+            http_response_code(418);
         }
     } catch (Exception $e) {
         // Error executing query, set response code
-        http_response_code(400);
+        http_response_code(418);
     }
 } else {
     // set response code
-    http_response_code(400);
+    http_response_code(418);
 }

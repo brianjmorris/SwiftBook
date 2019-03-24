@@ -1,6 +1,6 @@
 package co.swiftbook.entity;
 
-import java.util.List;
+import java.text.SimpleDateFormat;
 
 import co.swiftbook.exception.ApiObjectException;
 
@@ -8,20 +8,29 @@ public class Building extends ApiObject {
 
 	private int buildingID = -1;
 	private Organization organization;
-	private List<Room> rooms;
+	private String name;
 	private String address;
 	private Boolean wheelchairAccessible;
-	private String sections;	// i.e. East Wing, etc.
 	
-	public Building(Organization org, List<Room> rooms, 
-			String address, Boolean wheelchairAccessible, String sections) {
+	public Building(Organization org, String name,
+			String address, Boolean wheelchairAccessible) {
 		setOrganization(org);
+		setName(name);
 		setAddress(address);
 		setWheelchairAccessible(wheelchairAccessible);
-		setSections(sections);
+	}
+	
+	@Override
+	public String toJson() {
+		String json = "{ ";
+		json += "\"buildingID\" : \"" + this.getID() + "\", ";
+		json += "\"organizationID\" : \"" + this.getOrganization().getID() + "\", ";
+		json += "\"name\" : \"" + this.getName() + "\", ";
+		json += "\"address\" : \"" + this.getAddress() + "\", ";
+		json += "\"wheelchairAccessible\" : \"" + this.isWheelchairAccessible() + "\"";
+		json += " }";
 		
-		for(int i = 0; i < rooms.size(); i++)
-			addRoom(rooms.get(i));
+		return json;
 	}
 
 	/**
@@ -58,27 +67,17 @@ public class Building extends ApiObject {
 	}
 
 	/**
-	 * @return the rooms
+	 * @return the name
 	 */
-	public List<Room> getRooms() {
-		return rooms;
+	public String getName() {
+		return name;
 	}
 
 	/**
-	 * @param room the room to add
+	 * @param name the name to set
 	 */
-	public void addRoom(Room room) {
-		if(room.getID() < 0)
-			throw new ApiObjectException("Room does not have an ID");
-		
-		this.rooms.add(room);
-	}
-
-	/**
-	 * @param room the room to remove
-	 */
-	public void removeRoom(Room room) {
-		this.rooms.remove(room);
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	/**
@@ -108,28 +107,10 @@ public class Building extends ApiObject {
 	public void setWheelchairAccessible(Boolean wheelchairAccessible) {
 		this.wheelchairAccessible = wheelchairAccessible;
 	}
-
-	/**
-	 * @return the sections
-	 */
-	public String getSections() {
-		return sections;
-	}
-
-	/**
-	 * @param sections the sections to set
-	 */
-	public void setSections(String sections) {
-		this.sections = sections;
-	}
-
+	
 	@Override
-	public String toJson() {
-		String str = "{ ";
-		str += this.getID();
-		str += " }";
-		
-		return str;
+	public String toString() {
+		return toJson();
 	}
 	
 }

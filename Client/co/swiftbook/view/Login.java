@@ -1,6 +1,7 @@
 package co.swiftbook.view;
 
 import co.swiftbook.entity.User;
+import co.swiftbook.apiClient.LoginApiClient;
 import co.swiftbook.apiClient.UserApiClient;
 import javafx.application.Application;
 import javafx.event.Event;
@@ -19,11 +20,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.*;
 
 public class Login extends Application {
-	
+
 	private static UserApiClient userApiClient;
+	private static LoginApiClient loginApiClient;
 	
     public static void main(String[] args) {
     	userApiClient = new UserApiClient();
+    	loginApiClient = new LoginApiClient();
     	
     	launch(args);
     }
@@ -120,7 +123,7 @@ public class Login extends Application {
         		username.clear();
         		password.clear();
           		return;
-          	} else if (userApiClient.login(currentUser, password.getText())) {
+          	} else if (loginApiClient.login(currentUser, password.getText())) {
                 Registration registration = new Registration();
                 registration.start(primaryStage);
     		} else {

@@ -17,8 +17,23 @@ public class Room extends ApiObject {
 		setBuilding(building);
 		setName(name);
 		setRoomNumber(roomNumber);
+		setFloorNumber(floorNumber);
 		setBuildingSection(buildingSection);
 		setRoomType(roomType);
+	}
+	
+	@Override
+	public String toJson() {
+		String json = "{ ";
+		json += "\"roomID\" : \"" + this.getID() + "\", ";
+		json += "\"buildingID\" : \"" + this.getBuilding().getID() + "\", ";
+		json += "\"name\" : \"" + this.getName() + "\", ";
+		json += "\"roomNumber\" : \"" + this.getRoomNumber() + "\", ";
+		json += "\"floorNumber\" : \"" + this.getFloorNumber() + "\", ";
+		json += "\"buildingSection\" : \"" + this.getBuildingSection() + "\", ";
+		json += "\"roomType\" : \"" + this.getRoomType() + "\"";
+		json += " }";
+		return json;
 	}
 
 	/**
@@ -123,15 +138,10 @@ public class Room extends ApiObject {
 	public void setRoomType(String roomType) {
 		this.roomType = roomType;
 	}
-
-
+	
 	@Override
-	public String toJson() {
-		String str = "{ ";
-		str += this.getID();
-		str += " }";
-		
-		return str;
+	public String toString() {
+		return toJson();
 	}
 	
 }

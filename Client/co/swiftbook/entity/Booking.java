@@ -1,9 +1,8 @@
 package co.swiftbook.entity;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
-import co.swiftbook.apiClient.ApiClient;
-import co.swiftbook.apiClient.BookingApiClient;
 import co.swiftbook.exception.ApiObjectException;
 
 public class Booking extends ApiObject {
@@ -11,14 +10,39 @@ public class Booking extends ApiObject {
 	private int bookingID = -1;
 	private User user;
 	private Room room;
-	private Date startTime;
-	private Date endTime;
+	private LocalDateTime start;
+	private LocalDateTime end;
 	
-	public Booking(User user, Room room, Date startTime, Date endTime) {
+	public Booking(User user, Room room, LocalDateTime start, LocalDateTime end) {
 		setUser(user);
 		setRoom(room);
-		setEndTime(endTime);
-		setStartTime(startTime);
+		setEnd(end);
+		setStart(start);
+	}
+	
+	@Override
+	public String toJson() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		
+		String json = "{";
+		json += "\"bookingID\":\"" + this.getID() + "\"";
+		
+		if(this.getStart() != null) {
+			json += ",\"start\":\"" + formatter.format(this.getStart()) + "\"";
+		}
+		if(this.getEnd() != null) {
+			json += ",\"end\":\"" + formatter.format(this.getEnd()) + "\"";
+		}
+		if(this.getUser() != null) {
+			json += ",\"userID\":\"" + this.getUser().getID() + "\"";
+		}
+		if(this.getRoom() != null) {
+			json += ",\"roomID\":\"" + this.getRoom().getID() + "\"";
+		}
+		
+		json += "}";
+		
+		return json;
 	}
 
 	/**
@@ -72,44 +96,36 @@ public class Booking extends ApiObject {
 	}
 
 	/**
-	 * @return the startTime
+	 * @return the start
 	 */
-	public Date getStartTime() {
-		return startTime;
+	public LocalDateTime getStart() {
+		return start;
 	}
 
 	/**
-	 * @param startTime the startTime to set
+	 * @param start the start to set
 	 */
-	public void setStartTime(Date startTime) {
-		this.startTime = startTime;
+	public void setStart(LocalDateTime start) {
+		this.start = start;
 	}
 
 	/**
-	 * @return the endTime
+	 * @return the end
 	 */
-	public Date getEndTime() {
-		return endTime;
+	public LocalDateTime getEnd() {
+		return end;
 	}
 
 	/**
-	 * @param endTime the endTime to set
+	 * @param end the end to set
 	 */
-	public void setEndTime(Date endTime) {
-		this.endTime = endTime;
+	public void setEnd(LocalDateTime end) {
+		this.end = end;
 	}
-
+	
 	@Override
-	public String toJson() {
-		String str = "{ ";
-		str += "bookingID : " + this.bookingID + ", ";
-		str += "userID : " + this.user.getID() + ", ";
-		str += "roomID : " + this.room.getID() + ", ";
-		str += "startTime : " + this.bookingID + ", ";
-		str += "endTime : " + this.bookingID;
-		str += " }";
-		
-		return str;
+	public String toString() {
+		return toJson();
 	}
 
 }

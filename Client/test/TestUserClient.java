@@ -1,8 +1,7 @@
-package co.swiftbook.apiClient;
+package test;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import co.swiftbook.apiClient.OrganizationApiClient;
+import co.swiftbook.apiClient.UserApiClient;
 import co.swiftbook.entity.*;
 
 public class TestUserClient {
@@ -11,11 +10,14 @@ public class TestUserClient {
 		
 		// create an API client object
 		UserApiClient userApiClient = new UserApiClient();
+		OrganizationApiClient organizationApiClient = new OrganizationApiClient();
 		
 		// create a new user
-		User newUser = new User("TestUser", "test@email.com", "Glenn", "Smith", new Organization("Test Organization"), false);
-		if(userApiClient.create(newUser)) {
-			System.out.println("Created User: " + newUser);
+		Organization testOrganization = organizationApiClient.getAll()[0];
+		User testUser = new User("TestUser", "test@email.com", "Test", "User", testOrganization, false);
+		testUser = userApiClient.create(testUser);
+		if(testUser != null) {
+			System.out.println("New User ID: " + testUser.getID());
 		}
 		
 		try {
@@ -37,7 +39,7 @@ public class TestUserClient {
 		}
 		
 		// update a user
-		userByUsername.setFirstName("Alasdair");
+		userByUsername.setUsername("TestUserAgain");
 		if(userApiClient.update(userByUsername)) {
 			System.out.println("\nUpdated User: " + userByUsername.getUsername() + " - " + userByUsername);
 		}

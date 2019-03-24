@@ -14,12 +14,14 @@ $columns = [
   "bookingID",
   "userID",
   "roomID",
-  "startTime",
-  "endTime"
+  "start",
+  "end"
 ];
 
 // end configuration
 /*****************************************************************************/
+
+// TODO use quotes for sql commands
 
 $options = [
   PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
@@ -69,25 +71,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($stmt->execute()) {
             // Statement executed successfully
 
-            // get new booking id
+            // get new object id
             $new_id = $pdo->lastInsertId();
 
-            // TODO fix Location header (not being set)
-            // set location header pointing to new booking
-            header("Location: /api/Booking/" + $new_id);
             // set response code 201 Created
             http_response_code(201);
+
+            // set response content type
+            header('Content-Type: application/json');
+
+            // return new object with ID set and no hash
+            $requestBody[$columns[0]] = $new_id;
+            echo json_encode($requestBody);
+
+            // set location header pointing to new object
+            header("Location: https://swiftbook.co/api/Booking/" . $new_id);
         } else {
-            // Roll back changes
-            $pdo->rollBack();
             // set response code 424 Failed Dependency
-            http_response_code(424);
+            http_response_code(418);
         }
     } catch (Exception $e) {
-        // Roll back changes
-        $pdo->rollBack();
         // Error executing statement, set response code
-        // http_response_code(400);
+        http_response_code(418);
         echo $e->getMessage();
     }
 } elseif ($_SERVER['REQUEST_METHOD'] === 'PUT'
@@ -120,11 +125,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             http_response_code(204);
         } else {
             // set response code
-            http_response_code(400);
+            http_response_code(418);
         }
     } catch (Exception $e) {
         // Error executing statement, set response code
-        http_response_code(400);
+        http_response_code(418);
     }
 } elseif ($_SERVER['REQUEST_METHOD'] === 'DELETE'
     && (isset($_GET[$columns[0]]) && !empty($_GET[$columns[0]]))) {
@@ -148,11 +153,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             http_response_code(204);
         } else {
             // set response code
-            http_response_code(400);
+            http_response_code(418);
         }
     } catch (Exception $e) {
         // Error executing query, set response code
-        http_response_code(400);
+        http_response_code(418);
     }
 } elseif ($_SERVER['REQUEST_METHOD'] === 'GET'
     && (isset($_GET[$columns[0]]) && !empty($_GET[$columns[0]]))) {
@@ -192,15 +197,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 echo json_encode($resultArray);
             } else {
                 // No rows returned, set response code
-                http_response_code(404);
+                http_response_code(204);
             }
         } else {
             // set response code
-            http_response_code(400);
+            http_response_code(418);
         }
     } catch (Exception $e) {
         // Error executng query, set response code
-        http_response_code(400);
+        http_response_code(418);
     }
 } elseif ($_SERVER['REQUEST_METHOD'] === 'GET'
     && (isset($_GET[$columns[1]]) && !empty($_GET[$columns[1]]))) {
@@ -240,15 +245,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 echo json_encode($resultArray);
             } else {
                 // No rows returned, set response code
-                http_response_code(404);
+                http_response_code(204);
             }
         } else {
             // set response code
-            http_response_code(400);
+            http_response_code(418);
         }
     } catch (Exception $e) {
         // Error executng query, set response code
-        http_response_code(400);
+        http_response_code(418);
     }
 } elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
     // GET request received
@@ -283,13 +288,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         } else {
             // set response code
-            http_response_code(400);
+            http_response_code(418);
         }
     } catch (Exception $e) {
         // Error executing query, set response code
-        http_response_code(400);
+        http_response_code(418);
     }
 } else {
     // set response code
-    http_response_code(400);
+    http_response_code(418);
 }
