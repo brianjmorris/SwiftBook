@@ -1,4 +1,4 @@
-package test;
+package co.swiftbook.test;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

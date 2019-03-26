@@ -7,16 +7,13 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
-import javafx.scene.control.RadioButton;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.*;
 
 public class Registration extends Application {
@@ -28,7 +25,6 @@ public class Registration extends Application {
     	launch(args);
     }
     
-    @SuppressWarnings("unchecked")
     @Override
     public void start(Stage primaryStage) {
     	
@@ -67,7 +63,7 @@ public class Registration extends Application {
         
         // Styling
         root.setCenter(organizationDetails);
-        root.setMargin(organizationDetails,  new Insets(10, 300, 0, 300));
+        BorderPane.setMargin(organizationDetails,  new Insets(10, 300, 0, 300));
         root.getStyleClass().add("root");
         root.setPadding(new Insets(150, 0, 0, 0));
         
@@ -87,13 +83,13 @@ public class Registration extends Application {
         primaryStage.show();
         
         // Event Handling
-        submit.setOnMouseEntered(new EventHandler() {
+        submit.setOnMouseEntered(new EventHandler<Event>() {
             public void handle(Event e) {
                 scene.setCursor(Cursor.HAND);
             }
         });
         
-        submit.setOnMouseExited(new EventHandler() {
+        submit.setOnMouseExited(new EventHandler<Event>() {
             public void handle(Event e) {
                 scene.setCursor(Cursor.DEFAULT);
             }

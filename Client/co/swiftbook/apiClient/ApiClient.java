@@ -48,6 +48,7 @@ public abstract class ApiClient<T extends ApiObject> {
 			conn.setDoOutput(true);
 			conn.setRequestMethod("GET");
 			conn.setRequestProperty("Content-Type", "application/json");
+			conn.setRequestProperty("User-Agent", "SwiftBook");
 
 			if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
 				throw new Exception("Could not retrieve objects, received code "
@@ -85,6 +86,7 @@ public abstract class ApiClient<T extends ApiObject> {
 			conn.setDoOutput(true);
 			conn.setRequestMethod("GET");
 			conn.setRequestProperty("Content-Type", "application/json");
+			conn.setRequestProperty("User-Agent", "SwiftBook");
 
 			if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
 				if(conn.getResponseCode() == HttpURLConnection.HTTP_NO_CONTENT) {
@@ -130,6 +132,7 @@ public abstract class ApiClient<T extends ApiObject> {
 			conn.setDoOutput(true);
 			conn.setRequestMethod("POST");
 			conn.setRequestProperty("Content-Type", "application/json");
+			conn.setRequestProperty("User-Agent", "SwiftBook");
 
 			String newObjectString = newObject.toJson();
 
@@ -178,6 +181,7 @@ public abstract class ApiClient<T extends ApiObject> {
 			conn.setDoOutput(true);
 			conn.setRequestMethod("PUT");
 			conn.setRequestProperty("Content-Type", "application/json");
+			conn.setRequestProperty("User-Agent", "SwiftBook");
 
 			String newObjectString = object.toJson();
 
@@ -214,6 +218,7 @@ public abstract class ApiClient<T extends ApiObject> {
 			conn.setDoOutput(true);
 			conn.setRequestMethod("DELETE");
 			conn.setRequestProperty("Content-Type", "application/json");
+			conn.setRequestProperty("User-Agent", "SwiftBook");
 
 			if (conn.getResponseCode() != HttpURLConnection.HTTP_NO_CONTENT) {
 				success = false;

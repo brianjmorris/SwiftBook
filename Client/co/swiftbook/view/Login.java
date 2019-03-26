@@ -31,7 +31,6 @@ public class Login extends Application {
     	launch(args);
     }
     
-    @SuppressWarnings("unchecked")
     @Override
     public void start(Stage primaryStage) {
     	
@@ -41,7 +40,6 @@ public class Login extends Application {
         root.setPadding(new Insets(220, 0, 0, 0));
         Scene scene = new Scene(root, 1000, 800);
         scene.getStylesheets().add(getClass().getResource("stylesheet.css").toExternalForm());
-        Group elements = new Group();
         
         // Logo and Software Name
         // TODO change image to local file
@@ -63,7 +61,7 @@ public class Login extends Application {
         Button login = new Button("Login");
         credentials.setPadding(new Insets(100, 0, 0, 0));
         root.setCenter(credentials);
-        root.setMargin(credentials,  new Insets(10, 300, 0, 300));
+        BorderPane.setMargin(credentials,  new Insets(10, 300, 0, 300));
         
         // Styling
         root.getStyleClass().add("root");
@@ -78,31 +76,31 @@ public class Login extends Application {
         root.setTop(imageView);
         root.setBottom(register);
         register.setPadding(new Insets(0, 0, 110, 330));
-        root.setAlignment(imageView, Pos.TOP_CENTER);
+        BorderPane.setAlignment(imageView, Pos.TOP_CENTER);
         
         primaryStage.setScene(scene);
         primaryStage.show();
         
         // Event Handling
-        login.setOnMouseEntered(new EventHandler() {
+        login.setOnMouseEntered(new EventHandler<Event>() {
             public void handle(Event e) {
                 scene.setCursor(Cursor.HAND);
             }
         });
         
-        login.setOnMouseExited(new EventHandler() {
+        login.setOnMouseExited(new EventHandler<Event>() {
             public void handle(Event e) {
                 scene.setCursor(Cursor.DEFAULT);
             }
         });
         
-        register.setOnMouseEntered(new EventHandler() {
+        register.setOnMouseEntered(new EventHandler<Event>() {
             public void handle(Event e) {
                 scene.setCursor(Cursor.HAND);
             }
         });
         
-        register.setOnMouseExited(new EventHandler() {
+        register.setOnMouseExited(new EventHandler<Event>() {
             public void handle(Event e) {
                 scene.setCursor(Cursor.DEFAULT);
             }
@@ -129,11 +127,9 @@ public class Login extends Application {
     		} else {
           		System.out.println("Username and password do not match");
 
-        		username.clear();
         		password.clear();
     			return;
     		}
-        	
         });
     }
 }

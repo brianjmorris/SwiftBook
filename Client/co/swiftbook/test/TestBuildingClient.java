@@ -1,4 +1,4 @@
-package test;
+package co.swiftbook.test;
 
 import co.swiftbook.apiClient.BuildingApiClient;
 import co.swiftbook.apiClient.OrganizationApiClient;

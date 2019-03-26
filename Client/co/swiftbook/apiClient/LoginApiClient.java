@@ -46,6 +46,7 @@ public class LoginApiClient extends ApiClient<User> {
 			conn.setDoOutput(true);
 			conn.setRequestMethod("POST");
 			conn.setRequestProperty("Content-Type", "application/json");
+			conn.setRequestProperty("User-Agent", "SwiftBook");
 
 			String newUserString = gson.toJson(user, this.entityClass);
 
