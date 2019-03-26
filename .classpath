@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry excluding="gson/|jBCrypt-0.4/src/|src/|co/swiftbook/view/view_src/" kind="src" path="Client"/>
+	<classpathentry kind="src" path="Libraries"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="lib/gson.jar"/>
-	<classpathentry kind="lib" path="lib/jbcrypt.jar"/>
+	<classpathentry kind="lib" path="Libraries/gson.jar"/>
+	<classpathentry kind="lib" path="Libraries/jbcrypt.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
