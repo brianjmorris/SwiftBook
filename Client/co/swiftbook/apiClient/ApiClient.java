@@ -13,11 +13,11 @@ public abstract class ApiClient<T extends ApiObject> {
 	protected String address = "https://swiftbook.co/api/";
 	protected String[] booleanFields;
 	
-	protected Class entityClass;
-	protected Class entityArrayClass;
+	protected Class<T> entityClass;
+	protected Class<T[]> entityArrayClass;
 	protected Gson gson;
 	
-	public ApiClient(Class entityClass, Class entityArrayClass, String[] booleanFields) {
+	public ApiClient(Class<T> entityClass, Class<T[]> entityArrayClass, String[] booleanFields) {
 		gson = new Gson();
 		
 		this.entityClass = entityClass;
@@ -27,7 +27,7 @@ public abstract class ApiClient<T extends ApiObject> {
 		this.address += this.entityClass.getSimpleName() + "/";
 	}
 	
-	public ApiClient(Class entityClass, Class entityArrayClass, String endpoint) {
+	public ApiClient(Class<T> entityClass, Class<T[]> entityArrayClass, String endpoint) {
 		gson = new Gson();
 		
 		this.entityClass = entityClass;

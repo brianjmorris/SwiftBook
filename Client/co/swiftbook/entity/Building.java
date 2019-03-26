@@ -1,7 +1,5 @@
 package co.swiftbook.entity;
 
-import java.text.SimpleDateFormat;
-
 import co.swiftbook.exception.ApiObjectException;
 
 public class Building extends ApiObject {

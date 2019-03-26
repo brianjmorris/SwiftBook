@@ -23,7 +23,6 @@ public class TestBuildingClient {
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -36,7 +35,6 @@ public class TestBuildingClient {
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
  		
@@ -47,12 +45,10 @@ public class TestBuildingClient {
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		// get all buildings
-//		ArrayList<Building> buildings = buildingClient.getAll();
 		Building[] buildings = buildingApiClient.getAll();
 		
 		System.out.println("\nAll Buildings:");
@@ -68,7 +64,6 @@ public class TestBuildingClient {
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

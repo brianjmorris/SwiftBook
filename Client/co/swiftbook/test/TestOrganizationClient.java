@@ -20,7 +20,6 @@ public class TestOrganizationClient {
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -33,7 +32,6 @@ public class TestOrganizationClient {
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
  		
@@ -44,12 +42,10 @@ public class TestOrganizationClient {
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		// get all organizations
-//		ArrayList<Organization> organizations = organizationClient.getAll();
 		Organization[] organizations = organizationApiClient.getAll();
 		
 		System.out.println("\nAll Organizations:");
@@ -65,7 +61,6 @@ public class TestOrganizationClient {
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

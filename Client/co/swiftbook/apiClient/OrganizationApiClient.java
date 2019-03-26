@@ -1,7 +1,5 @@
 package co.swiftbook.apiClient;
 
-import java.util.ArrayList;
-
 import co.swiftbook.entity.Organization;
 
 public class OrganizationApiClient extends ApiClient<Organization> {

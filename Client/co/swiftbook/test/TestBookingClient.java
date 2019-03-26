@@ -30,7 +30,6 @@ public class TestBookingClient {
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -44,7 +43,6 @@ public class TestBookingClient {
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
  		
@@ -55,12 +53,10 @@ public class TestBookingClient {
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		// get all bookings
-//		ArrayList<Booking> bookings = bookingClient.getAll();
 		Booking[] bookings = bookingApiClient.getAll();
 		
 		System.out.println("\nAll Bookings:");
@@ -76,7 +72,6 @@ public class TestBookingClient {
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

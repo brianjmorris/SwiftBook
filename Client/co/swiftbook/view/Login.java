@@ -42,7 +42,6 @@ public class Login extends Application {
         scene.getStylesheets().add(getClass().getResource("stylesheet.css").toExternalForm());
         
         // Logo and Software Name
-        // TODO change image to local file
         Image softwareName = new Image("co/swiftbook/view/img/swiftbook.png", 0, 115, true, true);
         ImageView imageView = new ImageView();
         imageView.setImage(softwareName);

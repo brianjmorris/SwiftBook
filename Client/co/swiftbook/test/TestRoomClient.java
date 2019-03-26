@@ -23,7 +23,6 @@ public class TestRoomClient {
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -36,7 +35,6 @@ public class TestRoomClient {
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
  		
@@ -47,12 +45,10 @@ public class TestRoomClient {
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		// get all rooms
-//		ArrayList<Room> rooms = roomClient.getAll();
 		Room[] rooms = roomApiClient.getAll();
 		
 		System.out.println("\nAll Rooms:");
@@ -68,7 +64,6 @@ public class TestRoomClient {
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

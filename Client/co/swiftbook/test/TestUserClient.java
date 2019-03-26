@@ -23,7 +23,6 @@ public class TestUserClient {
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -34,7 +33,6 @@ public class TestUserClient {
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -47,7 +45,6 @@ public class TestUserClient {
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -58,12 +55,10 @@ public class TestUserClient {
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		// get all users
-//		ArrayList<User> users = userClient.getAll();
 		User[] users = userApiClient.getAll();
 		
 		System.out.println("\nAll Users:");
@@ -79,7 +74,6 @@ public class TestUserClient {
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

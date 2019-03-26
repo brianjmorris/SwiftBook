@@ -9,8 +9,6 @@ import java.net.URL;
 
 import org.mindrot.jbcrypt.*;
 
-import com.google.gson.Gson;
-
 import co.swiftbook.entity.User;
 import co.swiftbook.exception.RestClientException;
 
@@ -24,7 +22,6 @@ public class LoginApiClient extends ApiClient<User> {
 	protected User jsonToObject(String object) {
 
 		object = convertBooleans(object);
-		// TODO convert foreign keys to object references
 		
 		return (User) gson.fromJson(object, this.entityClass);
 	}
@@ -33,7 +30,6 @@ public class LoginApiClient extends ApiClient<User> {
 	protected User[] jsonToArray(String objects) {
 
 		objects = convertBooleans(objects);
-		// TODO convert foreign keys to object references
 		
 		return (User[]) gson.fromJson(objects, this.entityArrayClass);
 	}
