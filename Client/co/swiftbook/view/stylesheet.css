@@ -29,6 +29,25 @@
     -fx-text-fill: #c6272f;
 }
 
+.dashButton {
+    -fx-border-width: 0;
+    -fx-border-color: #c6272f;
+    -fx-background-color: #c6272f;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 18pt;
+}
+
+.dashButton:hover {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #c6272f;
+}
+
+.dashTitle {
+    -fx-fill: #ffffff;
+    -fx-font-size: 30pt;
+    -fx-font-family: 'Raleway' sans-serif;
+}
+
 .register {
     -fx-font-size: 22;
     -fx-font-family: 'Raleway' sans-serif;
@@ -60,4 +79,9 @@
     -fx-font-size: 24;
     -fx-font-family: 'Raleway' sans-serif;
     -fx-fill: #ffffff;
+}
+
+.vbox {
+    /*-fx-background-color: #2f4f4f; */
+    -fx-spacing: 20;
 }
