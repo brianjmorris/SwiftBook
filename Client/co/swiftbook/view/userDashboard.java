@@ -1,8 +1,5 @@
 package co.swiftbook.view;
 
-import co.swiftbook.entity.User;
-import co.swiftbook.apiClient.LoginApiClient;
-import co.swiftbook.apiClient.UserApiClient;
 import javafx.application.Application;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -19,14 +16,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.*;
 
 public class userDashboard extends Application {
-
-	private static UserApiClient userApiClient;
-	private static LoginApiClient loginApiClient;
 	
     public static void main(String[] args) {
-    	userApiClient = new UserApiClient();
-    	loginApiClient = new LoginApiClient();
-    	
+
     	launch(args);
     }
     
@@ -67,7 +59,7 @@ public class userDashboard extends Application {
         bookRoomBtn.getStyleClass().add("dashButton");
         releaseRoomBtn.getStyleClass().add("dashButton");
         detailsBtn.getStyleClass().add("dashButton");
-        logOut.getStyleClass().add("register");
+        logOut.getStyleClass().add("logOutButton");
 
         // Add To View
         root.setTop(viewTitle);
@@ -79,16 +71,50 @@ public class userDashboard extends Application {
         primaryStage.show();
         
         // Event Handling
-        bookRoomBtn.setOnMouseEntered(new EventHandler<Event>() {
-            public void handle(Event e) {
-                scene.setCursor(Cursor.HAND);
-            }
+        bookRoomBtn.setOnAction(e -> {
+            Registration registration = new Registration();
+            registration.start(primaryStage);
         });
         
+        bookRoomBtn.setOnAction(e -> {
+            Registration registration = new Registration();
+            registration.start(primaryStage);
+        });
+         
+        bookRoomBtn.setOnAction(e -> {
+            Registration registration = new Registration();
+            registration.start(primaryStage);
+        });
+        
+        logOut.setOnAction(e -> {
+            Login login = new Login();
+            login.start(primaryStage);
+        });
+        
+        // Cursor Changes
+        bookRoomBtn.setOnMouseEntered(new EventHandler<Event>() {
+            public void handle(Event e) { scene.setCursor(Cursor.HAND);}
+        });
         bookRoomBtn.setOnMouseExited(new EventHandler<Event>() {
-            public void handle(Event e) {
-                scene.setCursor(Cursor.DEFAULT);
-            }
+            public void handle(Event e) { scene.setCursor(Cursor.DEFAULT);}
+        });
+        releaseRoomBtn.setOnMouseEntered(new EventHandler<Event>() {
+            public void handle(Event e) { scene.setCursor(Cursor.HAND);}
+        });
+        releaseRoomBtn.setOnMouseExited(new EventHandler<Event>() {
+            public void handle(Event e) { scene.setCursor(Cursor.DEFAULT);}
+        });
+        detailsBtn.setOnMouseEntered(new EventHandler<Event>() {
+            public void handle(Event e) { scene.setCursor(Cursor.HAND);}
+        });
+        detailsBtn.setOnMouseExited(new EventHandler<Event>() {
+            public void handle(Event e) { scene.setCursor(Cursor.DEFAULT);}
+        });
+        logOut.setOnMouseEntered(new EventHandler<Event>() {
+            public void handle(Event e) { scene.setCursor(Cursor.HAND);}
+        });
+        logOut.setOnMouseExited(new EventHandler<Event>() {
+            public void handle(Event e) { scene.setCursor(Cursor.DEFAULT);}
         });
     }
 }

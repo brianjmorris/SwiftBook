@@ -1,8 +1,5 @@
 package co.swiftbook.view;
 
-import co.swiftbook.entity.User;
-import co.swiftbook.apiClient.LoginApiClient;
-import co.swiftbook.apiClient.UserApiClient;
 import javafx.application.Application;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -11,6 +8,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -20,13 +18,8 @@ import javafx.scene.*;
 
 public class adminDashboard extends Application {
 
-	private static UserApiClient userApiClient;
-	private static LoginApiClient loginApiClient;
-	
     public static void main(String[] args) {
-    	userApiClient = new UserApiClient();
-    	loginApiClient = new LoginApiClient();
-    	
+
     	launch(args);
     }
     
@@ -36,7 +29,7 @@ public class adminDashboard extends Application {
     	// View title
         primaryStage.setTitle("SwiftBook");
         BorderPane root = new BorderPane();
-        root.setPadding(new Insets(170, 0, 115, 0));
+        root.setPadding(new Insets(170, 0,  150, 0));
         Scene scene = new Scene(root, 1000, 800);
         scene.getStylesheets().add(getClass().getResource("stylesheet.css").toExternalForm());
         
@@ -48,32 +41,46 @@ public class adminDashboard extends Application {
         VBox viewTitle = new VBox();
         
         // User Options
-        VBox actions = new VBox();
+        VBox userActions = new VBox();
+        VBox adminActions = new VBox();
+        HBox actions = new HBox();
         
         Button bookRoomBtn = new Button("Book Room");
         Button releaseRoomBtn = new Button("Release Booking");
-        Button detailsBtn = new Button("Display Meeting Details");
+        Button detailsBtn = new Button("Find Meeting Details");
         Button logOut = new Button("Log Out");
         
+        Button userBtn = new Button("Add or Delete User");
+        Button roomBtn = new Button("Add or Delete Room");
+        
         viewTitle.getChildren().addAll(imageView, dashTitle);
-        actions.getChildren().addAll(bookRoomBtn, releaseRoomBtn, detailsBtn, logOut);
+        adminActions.getChildren().addAll(userBtn, roomBtn, bookRoomBtn);
+        userActions.getChildren().addAll(releaseRoomBtn, detailsBtn, logOut);
+        actions.getChildren().addAll(adminActions, userActions);
 
         // Styling
         viewTitle.getStyleClass().add("vbox");
         viewTitle.setAlignment(Pos.CENTER);
+        userActions.getStyleClass().add("vbox");
+        userActions.setAlignment(Pos.CENTER_LEFT);
+        adminActions.getStyleClass().add("vbox");
+        adminActions.setAlignment(Pos.CENTER_LEFT);
         actions.getStyleClass().add("vbox");
         actions.setAlignment(Pos.CENTER);
+        
         dashTitle.getStyleClass().add("dashTitle");
         bookRoomBtn.getStyleClass().add("dashButton");
         releaseRoomBtn.getStyleClass().add("dashButton");
+        userBtn.getStyleClass().add("dashButton");
+        roomBtn.getStyleClass().add("dashButton");
         detailsBtn.getStyleClass().add("dashButton");
-        logOut.getStyleClass().add("register");
+        logOut.getStyleClass().add("logOutButton");
 
         // Add To View
         root.setTop(viewTitle);
         root.setBottom(actions);
         BorderPane.setAlignment(imageView, Pos.TOP_CENTER);
-        BorderPane.setAlignment(actions, Pos.TOP_CENTER);
+        BorderPane.setAlignment(userActions, Pos.TOP_CENTER);
         
         primaryStage.setScene(scene);
         primaryStage.show();

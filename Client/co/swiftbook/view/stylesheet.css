@@ -48,6 +48,20 @@
     -fx-font-family: 'Raleway' sans-serif;
 }
 
+.logOutButton {
+    -fx-border-width: 0;
+    -fx-border-color: #303030;
+    -fx-background-color: #303030;
+    -fx-text-fill: #c6272f;
+    -fx-font-size: 18pt;
+}
+
+.logOutButton:hover {
+    -fx-background-color: #303030;
+    -fx-text-fill: #ffffff;
+}
+
+
 .register {
     -fx-font-size: 22;
     -fx-font-family: 'Raleway' sans-serif;
