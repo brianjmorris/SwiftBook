@@ -1,5 +1,6 @@
 package co.swiftbook.view;
 
+import co.swiftbook.entity.Organization;
 import co.swiftbook.entity.User;
 import co.swiftbook.apiClient.LoginApiClient;
 import co.swiftbook.apiClient.UserApiClient;
@@ -23,12 +24,17 @@ public class Login extends Application {
 
 	private static UserApiClient userApiClient;
 	private static LoginApiClient loginApiClient;
+	public static Organization organization;
 	
     public static void main(String[] args) {
     	userApiClient = new UserApiClient();
     	loginApiClient = new LoginApiClient();
     	
     	launch(args);
+    }
+    
+    public Organization getOrganization() {
+    	return organization;
     }
     
     @Override
@@ -121,8 +127,18 @@ public class Login extends Application {
         		password.clear();
           		return;
           	} else if (loginApiClient.login(currentUser, password.getText())) {
-                Registration registration = new Registration();
-                registration.start(primaryStage);
+        		
+          		organization = currentUser.getOrganization();
+        		
+          		if (currentUser.isAdministrator()) {
+          			adminDashboard dash = new adminDashboard();
+          			dash.start(primaryStage);
+          		}
+          		else {
+          			userDashboard dash = new userDashboard();
+          			dash.start(primaryStage);
+          		}
+
     		} else {
           		System.out.println("Username and password do not match");
 
