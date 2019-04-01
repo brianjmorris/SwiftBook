@@ -92,7 +92,17 @@ public class UserBooking extends Application {
         primaryStage.show();
         
         // Event Handling
-        
+        back.setOnAction(e -> {
+            if (Login.adminAccess()) {
+            	AdminDashboard dash = new AdminDashboard();
+            	dash.start(primaryStage);
+            }
+            
+            else {
+            	UserDashboard dash = new UserDashboard();
+            	dash.start(primaryStage);
+            }
+        });
         
     }
 }

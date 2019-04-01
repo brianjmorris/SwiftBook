@@ -5,7 +5,6 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -86,16 +85,30 @@ public class AdminDashboard extends Application {
         primaryStage.show();
         
         // Event Handling
-        bookRoomBtn.setOnMouseEntered(new EventHandler<Event>() {
-            public void handle(Event e) {
-                scene.setCursor(Cursor.HAND);
-            }
+       
+        userBtn.setOnAction(e -> {
+            AdminUsers view = new AdminUsers();
+            view.start(primaryStage);
         });
         
-        bookRoomBtn.setOnMouseExited(new EventHandler<Event>() {
-            public void handle(Event e) {
-                scene.setCursor(Cursor.DEFAULT);
-            }
+        roomBtn.setOnAction(e -> {
+            AdminRooms booking = new AdminRooms();
+            booking.start(primaryStage);
+        });
+         
+        bookRoomBtn.setOnAction(e -> {
+            UserBooking view = new UserBooking();
+            view.start(primaryStage);
+        });
+         
+        detailsBtn.setOnAction(e -> {
+            RoomDetails view = new RoomDetails();
+            view.start(primaryStage);
+        });
+        
+        logOut.setOnAction(e -> {
+            Login view = new Login();
+            view.start(primaryStage);
         });
     }
 }
