@@ -42,7 +42,7 @@ public class User extends ApiObject {
 		json += "\"firstName\" : \"" + this.getFirstName() + "\", ";
 		json += "\"lastName\" : \"" + this.getLastName() + "\", ";
 		json += "\"hash\" : \"" + this.getHash() + "\", ";
-		json += "\"administrator\" : \"" + this.isAdministrator() + "\"";
+		json += "\"administrator\" : \"" + (this.isAdministrator() ? 1:0) + "\" ";
 		json += " }";
 		return json;
 	}

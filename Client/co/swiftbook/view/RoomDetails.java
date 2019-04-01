@@ -17,7 +17,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.*;
 
-public class searchRoomDetails extends Application {
+public class RoomDetails extends Application {
 	
     public static void main(String[] args) {
 
@@ -30,7 +30,7 @@ public class searchRoomDetails extends Application {
     	// View title
         primaryStage.setTitle("SwiftBook");
         BorderPane root = new BorderPane();
-        root.setPadding(new Insets(170, 200, 115, 200));
+        root.setPadding(new Insets(150, 200, 115, 200));
         Scene scene = new Scene(root, 1000, 800);
         scene.getStylesheets().add(getClass().getResource("stylesheet.css").toExternalForm());
         
@@ -45,12 +45,13 @@ public class searchRoomDetails extends Application {
         // User Options
         VBox details = new VBox();
        
-        TextField roomID = new TextField();
+        TextField roomNum = new TextField();
         TextArea roomDetails = new TextArea();
         Button search = new Button("Search");
+        Button back = new Button("Back");
         
         viewTitle.getChildren().addAll(imageView, dashTitle);
-        details.getChildren().addAll(roomID, roomDetails, search);
+        details.getChildren().addAll(roomNum, roomDetails, search, back);
 
         // Styling
         viewTitle.getStyleClass().add("vbox");
@@ -61,11 +62,12 @@ public class searchRoomDetails extends Application {
         details.setSpacing(60);
         dashTitle.getStyleClass().add("dashTitle");
         search.getStyleClass().add("dashButton");
-        roomID.getStyleClass().add("form");
-        roomID.setPromptText("Room ID");
+        roomNum.getStyleClass().add("form");
+        roomNum.setPromptText("Room Number");
         roomDetails.getStyleClass().add("form");
         roomDetails.setMaxHeight(200);
         roomDetails.setPromptText("Click Search to Display Room Details");
+        back.getStyleClass().add("logOutButton");
         
         // Add To View
         root.setTop(viewTitle);
@@ -77,5 +79,17 @@ public class searchRoomDetails extends Application {
         primaryStage.show();
         
         // Event Handling
+        back.setOnAction(e -> {
+            if (Login.adminAccess()) {
+            	AdminDashboard dash = new AdminDashboard();
+            	dash.start(primaryStage);
+            }
+            
+            else {
+            	UserDashboard dash = new UserDashboard();
+            	dash.start(primaryStage);
+            }
+        });
+        
     }
 }

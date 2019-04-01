@@ -16,7 +16,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.*;
 
-public class adminDashboard extends Application {
+public class AdminDashboard extends Application {
 
     public static void main(String[] args) {
 

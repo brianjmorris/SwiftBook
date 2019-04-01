@@ -15,7 +15,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.*;
 
-public class userDashboard extends Application {
+public class UserDashboard extends Application {
 	
     public static void main(String[] args) {
 
@@ -28,7 +28,7 @@ public class userDashboard extends Application {
     	// View title
         primaryStage.setTitle("SwiftBook");
         BorderPane root = new BorderPane();
-        root.setPadding(new Insets(170, 0, 115, 0));
+        root.setPadding(new Insets(170, 0, 175, 0));
         Scene scene = new Scene(root, 1000, 800);
         scene.getStylesheets().add(getClass().getResource("stylesheet.css").toExternalForm());
         
@@ -42,13 +42,15 @@ public class userDashboard extends Application {
         // User Options
         VBox actions = new VBox();
         
-        Button bookRoomBtn = new Button("Book Room");
-        Button releaseRoomBtn = new Button("Release Booking");
+        String test = Login.getOrganization();
+        System.out.println(test);
+        
+        Button bookRoomBtn = new Button("Room Booking");
         Button detailsBtn = new Button("Display Meeting Details");
         Button logOut = new Button("Log Out");
         
         viewTitle.getChildren().addAll(imageView, dashTitle);
-        actions.getChildren().addAll(bookRoomBtn, releaseRoomBtn, detailsBtn, logOut);
+        actions.getChildren().addAll(bookRoomBtn, detailsBtn, logOut);
 
         // Styling
         viewTitle.getStyleClass().add("vbox");
@@ -57,7 +59,6 @@ public class userDashboard extends Application {
         actions.setAlignment(Pos.CENTER);
         dashTitle.getStyleClass().add("dashTitle");
         bookRoomBtn.getStyleClass().add("dashButton");
-        releaseRoomBtn.getStyleClass().add("dashButton");
         detailsBtn.getStyleClass().add("dashButton");
         logOut.getStyleClass().add("logOutButton");
 
@@ -72,18 +73,13 @@ public class userDashboard extends Application {
         
         // Event Handling
         bookRoomBtn.setOnAction(e -> {
-            Registration registration = new Registration();
-            registration.start(primaryStage);
-        });
-        
-        bookRoomBtn.setOnAction(e -> {
-            Registration registration = new Registration();
-            registration.start(primaryStage);
+            UserBooking booking = new UserBooking();
+            booking.start(primaryStage);
         });
          
-        bookRoomBtn.setOnAction(e -> {
-            Registration registration = new Registration();
-            registration.start(primaryStage);
+        detailsBtn.setOnAction(e -> {
+            RoomDetails details = new RoomDetails();
+            details.start(primaryStage);
         });
         
         logOut.setOnAction(e -> {
@@ -96,12 +92,6 @@ public class userDashboard extends Application {
             public void handle(Event e) { scene.setCursor(Cursor.HAND);}
         });
         bookRoomBtn.setOnMouseExited(new EventHandler<Event>() {
-            public void handle(Event e) { scene.setCursor(Cursor.DEFAULT);}
-        });
-        releaseRoomBtn.setOnMouseEntered(new EventHandler<Event>() {
-            public void handle(Event e) { scene.setCursor(Cursor.HAND);}
-        });
-        releaseRoomBtn.setOnMouseExited(new EventHandler<Event>() {
             public void handle(Event e) { scene.setCursor(Cursor.DEFAULT);}
         });
         detailsBtn.setOnMouseEntered(new EventHandler<Event>() {

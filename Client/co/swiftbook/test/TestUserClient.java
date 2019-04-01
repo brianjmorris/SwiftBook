@@ -14,8 +14,9 @@ public class TestUserClient {
 		
 		// create a new user
 		Organization testOrganization = organizationApiClient.getAll()[0];
-		User testUser = new User("TestUser", "test@email.com", "Test", "User", testOrganization, false);
+		User testUser = new User("TestUser3", "test2@email.com", "Test2", "User2", testOrganization, false);
 		testUser = userApiClient.create(testUser);
+	
 		if(testUser != null) {
 			System.out.println("New User ID: " + testUser.getID());
 		}

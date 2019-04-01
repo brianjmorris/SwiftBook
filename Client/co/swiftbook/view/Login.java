@@ -24,7 +24,8 @@ public class Login extends Application {
 
 	private static UserApiClient userApiClient;
 	private static LoginApiClient loginApiClient;
-	public static Organization organization;
+	private static Organization organization;
+	private static Boolean adminAccess;
 	
     public static void main(String[] args) {
     	userApiClient = new UserApiClient();
@@ -33,8 +34,14 @@ public class Login extends Application {
     	launch(args);
     }
     
-    public Organization getOrganization() {
-    	return organization;
+    public static String getOrganization() {
+    	if (organization == null) { return "Test"; }
+    	return organization.getName();
+    }
+    
+    public static Boolean adminAccess() {
+    	if (adminAccess == null) return false;
+    	return adminAccess;
     }
     
     @Override
@@ -129,13 +136,16 @@ public class Login extends Application {
           	} else if (loginApiClient.login(currentUser, password.getText())) {
         		
           		organization = currentUser.getOrganization();
+          		adminAccess = currentUser.isAdministrator();
+          		
+          		System.out.println(currentUser.isAdministrator());
         		
           		if (currentUser.isAdministrator()) {
-          			adminDashboard dash = new adminDashboard();
+          			AdminDashboard dash = new AdminDashboard();
           			dash.start(primaryStage);
           		}
           		else {
-          			userDashboard dash = new userDashboard();
+          			UserDashboard dash = new UserDashboard();
           			dash.start(primaryStage);
           		}
 
