@@ -31,7 +31,7 @@ public class UserBooking extends Application {
     public void start(Stage primaryStage) {
     	
     	// View title
-        primaryStage.setTitle("SwiftBook");
+        primaryStage.setTitle("SwiftBook | Room Booking");
         BorderPane root = new BorderPane();
         root.setPadding(new Insets(170, 275, 100, 275));
         Scene scene = new Scene(root, 1000, 800);

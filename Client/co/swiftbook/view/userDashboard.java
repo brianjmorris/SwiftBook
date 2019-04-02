@@ -26,7 +26,7 @@ public class UserDashboard extends Application {
     public void start(Stage primaryStage) {
     	
     	// View title
-        primaryStage.setTitle("SwiftBook");
+        primaryStage.setTitle("SwiftBook | User Dashboard");
         BorderPane root = new BorderPane();
         root.setPadding(new Insets(170, 0, 175, 0));
         Scene scene = new Scene(root, 1000, 800);

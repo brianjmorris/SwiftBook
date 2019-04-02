@@ -32,7 +32,7 @@ public class AdminUsers extends Application {
     public void start(Stage primaryStage) {
     	
     	// View title
-        primaryStage.setTitle("SwiftBook");
+        primaryStage.setTitle("SwiftBook | User Administration");
         BorderPane root = new BorderPane();
         root.setPadding(new Insets(50, 275, 115, 275));
         Scene scene = new Scene(root, 1000, 800);
@@ -102,5 +102,16 @@ public class AdminUsers extends Application {
         primaryStage.show();
         
         // Event Handling
+        back.setOnAction(e -> {
+            if (Login.adminAccess()) {
+            	AdminDashboard dash = new AdminDashboard();
+            	dash.start(primaryStage);
+            }
+            
+            else {
+            	UserDashboard dash = new UserDashboard();
+            	dash.start(primaryStage);
+            }
+        });
     }
 }

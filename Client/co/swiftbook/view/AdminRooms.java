@@ -31,7 +31,7 @@ public class AdminRooms extends Application {
     public void start(Stage primaryStage) {
     	
     	// View title
-        primaryStage.setTitle("SwiftBook");
+        primaryStage.setTitle("SwiftBook | Room Administration");
         BorderPane root = new BorderPane();
         root.setPadding(new Insets(170, 275, 115, 275));
         Scene scene = new Scene(root, 1000, 800);
@@ -57,6 +57,7 @@ public class AdminRooms extends Application {
         	final ComboBox action = new ComboBox(options);
        
         TextField roomID = new TextField();
+        Text message = new Text("");
         TextField buildingID = new TextField();
         Button back = new Button("Back");
         Button submit = new Button("Submit");
@@ -90,7 +91,16 @@ public class AdminRooms extends Application {
         primaryStage.show();
         
         // Event Handling
-        
-        
+        back.setOnAction(e -> {
+            if (Login.adminAccess()) {
+            	AdminDashboard dash = new AdminDashboard();
+            	dash.start(primaryStage);
+            }
+            
+            else {
+            	UserDashboard dash = new UserDashboard();
+            	dash.start(primaryStage);
+            }
+        });
     }
 }

@@ -18,7 +18,7 @@ import javafx.scene.*;
 public class AdminDashboard extends Application {
 
     public static void main(String[] args) {
-
+    	
     	launch(args);
     }
     
@@ -26,7 +26,7 @@ public class AdminDashboard extends Application {
     public void start(Stage primaryStage) {
     	
     	// View title
-        primaryStage.setTitle("SwiftBook");
+        primaryStage.setTitle("SwiftBook | Admin Dashboard");
         BorderPane root = new BorderPane();
         root.setPadding(new Insets(170, 0,  150, 0));
         Scene scene = new Scene(root, 1000, 800);
@@ -42,21 +42,23 @@ public class AdminDashboard extends Application {
         // User Options
         VBox userActions = new VBox();
         VBox adminActions = new VBox();
+        VBox logBox = new VBox();
         HBox actions = new HBox();
         
-        Button bookRoomBtn = new Button("Book Room");
-        Button releaseRoomBtn = new Button("Release Booking");
+        Button bookRoomBtn = new Button("Create / Delete Booking");
         Button detailsBtn = new Button("Find Meeting Details");
+        Button test = new Button("");
         Button logOut = new Button("Log Out");
         
         Button userBtn = new Button("Add or Delete User");
         Button roomBtn = new Button("Add or Delete Room");
         
         viewTitle.getChildren().addAll(imageView, dashTitle);
-        adminActions.getChildren().addAll(userBtn, roomBtn, bookRoomBtn);
-        userActions.getChildren().addAll(releaseRoomBtn, detailsBtn, logOut);
+        adminActions.getChildren().addAll(userBtn, roomBtn);
+        userActions.getChildren().addAll(bookRoomBtn, detailsBtn);
         actions.getChildren().addAll(adminActions, userActions);
-
+        logBox.getChildren().addAll(actions, logOut);
+        
         // Styling
         viewTitle.getStyleClass().add("vbox");
         viewTitle.setAlignment(Pos.CENTER);
@@ -66,10 +68,11 @@ public class AdminDashboard extends Application {
         adminActions.setAlignment(Pos.CENTER_LEFT);
         actions.getStyleClass().add("vbox");
         actions.setAlignment(Pos.CENTER);
+        logBox.setAlignment(Pos.CENTER);
+        actions.setPadding(new Insets(20, 0, 75, 0));
         
         dashTitle.getStyleClass().add("dashTitle");
         bookRoomBtn.getStyleClass().add("dashButton");
-        releaseRoomBtn.getStyleClass().add("dashButton");
         userBtn.getStyleClass().add("dashButton");
         roomBtn.getStyleClass().add("dashButton");
         detailsBtn.getStyleClass().add("dashButton");
@@ -77,7 +80,7 @@ public class AdminDashboard extends Application {
 
         // Add To View
         root.setTop(viewTitle);
-        root.setBottom(actions);
+        root.setBottom(logBox);
         BorderPane.setAlignment(imageView, Pos.TOP_CENTER);
         BorderPane.setAlignment(userActions, Pos.TOP_CENTER);
         
