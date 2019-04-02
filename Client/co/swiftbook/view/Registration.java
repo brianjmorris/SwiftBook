@@ -1,5 +1,11 @@
 package co.swiftbook.view;
 
+import org.mindrot.jbcrypt.BCrypt;
+
+import co.swiftbook.apiClient.OrganizationApiClient;
+import co.swiftbook.apiClient.UserApiClient;
+import co.swiftbook.entity.Organization;
+import co.swiftbook.entity.User;
 import javafx.application.Application;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -101,6 +107,30 @@ public class Registration extends Application {
             public void handle(Event e) {
                 scene.setCursor(Cursor.DEFAULT);
             }
+        });
+        
+        submit.setOnAction(e -> {
+        	
+        	// Create new organization in database
+    		OrganizationApiClient organizationApiClient = new OrganizationApiClient();
+    		Organization organization = new Organization(orgName.getText());
+    		orgName.clear();
+    		organization = organizationApiClient.create(organization);
+    		int orgID = organization.getID();
+
+        	// Create new admin user for the organization
+    		UserApiClient userApiClient = new UserApiClient();
+    		
+    		// create a new user
+    		User newAdmin = new User(username.getText(), email.getText(), firstName.getText(), lastName.getText(), organization, true);
+    		newAdmin.setHash(BCrypt.hashpw(password.getText(), BCrypt.gensalt()));
+    		newAdmin = userApiClient.create(newAdmin);
+    		username.clear();
+    		email.clear();
+    		firstName.clear();
+    		lastName.clear();
+    		password.clear();
+    		message.setText("Thank you for registering with Swiftbook!");
         });
         
         back.setOnAction(e -> {
