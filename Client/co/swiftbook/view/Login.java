@@ -71,7 +71,7 @@ public class Login extends Application {
         // TODO limit password to 50 characters (may not be applicable here)
         PasswordField password = new PasswordField();
         Button login = new Button("Login");
-        credentials.setPadding(new Insets(100, 0, 0, 0));
+        credentials.setPadding(new Insets(90, 0, 0, 0));
         root.setCenter(credentials);
         BorderPane.setMargin(credentials,  new Insets(10, 300, 0, 300));
         

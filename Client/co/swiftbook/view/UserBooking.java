@@ -33,7 +33,7 @@ public class UserBooking extends Application {
     	// View title
         primaryStage.setTitle("SwiftBook | Room Booking");
         BorderPane root = new BorderPane();
-        root.setPadding(new Insets(170, 275, 100, 275));
+        root.setPadding(new Insets(100, 275, 100, 275));
         Scene scene = new Scene(root, 1000, 800);
         scene.getStylesheets().add(getClass().getResource("stylesheet.css").toExternalForm());
         
@@ -54,16 +54,18 @@ public class UserBooking extends Application {
         	        "Release Booking"
         	    );
         
-        	final ComboBox action = new ComboBox(options);
+        	final ComboBox<String> action = new ComboBox(options);
+        	action.setValue("Book Room");
        
         Text message = new Text("");
         TextField roomName = new TextField();
-        TextField time = new TextField();
+        TextField startTime = new TextField();
+        TextField endTime = new TextField();
         Button back = new Button("Back");
         Button submit = new Button("Submit");
         
-        viewTitle.getChildren().addAll(imageView, dashTitle);
-        details.getChildren().addAll(message, action, roomName, time, submit, back);
+        viewTitle.getChildren().addAll(imageView, dashTitle, message);
+        details.getChildren().addAll( action, roomName, startTime, endTime, submit, back);
 
         // Styling
         viewTitle.getStyleClass().add("vbox");
@@ -78,8 +80,10 @@ public class UserBooking extends Application {
         action.getStyleClass().add("form");
         roomName.getStyleClass().add("form");
         roomName.setPromptText("Room Number");
-        time.getStyleClass().add("form");
-        time.setPromptText("Meeting Date/Time");
+        startTime.getStyleClass().add("form");
+       startTime.setPromptText("Start Time");
+        endTime.getStyleClass().add("form");
+        endTime.setPromptText("End Time");
         back.getStyleClass().add("logOutButton");
         
         // Add To View

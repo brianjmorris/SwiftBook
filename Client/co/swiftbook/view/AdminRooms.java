@@ -33,7 +33,7 @@ public class AdminRooms extends Application {
     	// View title
         primaryStage.setTitle("SwiftBook | Room Administration");
         BorderPane root = new BorderPane();
-        root.setPadding(new Insets(170, 275, 115, 275));
+        root.setPadding(new Insets(5, 275, 115, 275));
         Scene scene = new Scene(root, 1000, 800);
         scene.getStylesheets().add(getClass().getResource("stylesheet.css").toExternalForm());
         
@@ -47,6 +47,7 @@ public class AdminRooms extends Application {
 
         // User Options
         VBox details = new VBox();
+        VBox logBox = new VBox();
         
         ObservableList<String> options = 
         	    FXCollections.observableArrayList(
@@ -54,38 +55,54 @@ public class AdminRooms extends Application {
         	        "Delete Room"
         	    );
         
-        	final ComboBox action = new ComboBox(options);
+        final ComboBox<String> action = new ComboBox(options);
+        action.setValue("Add Room");
        
-        TextField roomID = new TextField();
         Text message = new Text("");
-        TextField buildingID = new TextField();
+        TextField roomName = new TextField();
+        TextField roomNumber = new TextField();
+        TextField buildingName = new TextField();
+        TextField floorNumber = new TextField();
+        TextField buildingSection = new TextField();
+        TextField roomType = new TextField();
         Button back = new Button("Back");
         Button submit = new Button("Submit");
         
-        viewTitle.getChildren().addAll(imageView, dashTitle);
-        details.getChildren().addAll(action, roomID, buildingID, submit, back);
-
+        viewTitle.getChildren().addAll(imageView, dashTitle, message);
+        details.getChildren().addAll(action, buildingName, roomName, roomNumber, floorNumber, buildingSection, roomType, submit);
+        logBox.getChildren().addAll(details, back);
+        
         // Styling
         viewTitle.getStyleClass().add("vbox");
         viewTitle.setAlignment(Pos.CENTER);
         details.getStyleClass().add("vbox");
         details.setAlignment(Pos.CENTER);
-        details.setPadding(new Insets(40, 0, 40, 0));
-        details.setSpacing(60);
+        logBox.setAlignment(Pos.CENTER);
+        details.setPadding(new Insets(10, 0, 5,  0));
+        details.setSpacing(50);
         dashTitle.getStyleClass().add("dashTitle");
         submit.getStyleClass().add("dashButton");
         action.getStyleClass().add("form");
-        roomID.getStyleClass().add("form");
-        roomID.setPromptText("Room ID");
-        buildingID.getStyleClass().add("form");
-        buildingID.setPromptText("Building ID");
+        roomName.getStyleClass().add("form");
+        roomName.setPromptText("Room Name");
+        roomNumber.getStyleClass().add("form");
+        roomNumber.setPromptText("Room Number");
+        floorNumber.getStyleClass().add("form");
+        floorNumber.setPromptText("Floor Number");
+        buildingSection.getStyleClass().add("form");
+        buildingSection.setPromptText("Building Section");
+        roomType.getStyleClass().add("form");
+        roomType.setPromptText("Room Type");
+        buildingName.getStyleClass().add("form");
+        buildingName.setPromptText("Building Name");
         back.getStyleClass().add("logOutButton");
+        message.getStyleClass().add("message");
         
         // Add To View
         root.setTop(viewTitle);
-        root.setBottom(details);
+        root.setBottom(logBox);
         BorderPane.setAlignment(imageView, Pos.TOP_CENTER);
-        BorderPane.setAlignment(details, Pos.TOP_CENTER);
+        BorderPane.setAlignment(logBox, Pos.TOP_CENTER);
         
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -101,6 +118,21 @@ public class AdminRooms extends Application {
             	UserDashboard dash = new UserDashboard();
             	dash.start(primaryStage);
             }
+        });
+        
+        action.setOnAction(e -> {
+        	if (action.getValue().toString().equals("Delete Room")) {
+                details.getChildren().removeAll(buildingName, roomName, floorNumber, buildingSection, roomType);
+                root.setPadding(new Insets(175, 275, 150, 275));
+                details.setPadding(new Insets(10, 0, 160,  0));
+
+        	}
+        	if (action.getValue().toString().equals("Add Room")) {
+                details.getChildren().removeAll(roomNumber, submit);
+                details.getChildren().addAll(buildingName, roomNumber, roomName, floorNumber, buildingSection, roomType, submit);
+                root.setPadding(new Insets(5, 275, 115, 275));
+                details.setPadding(new Insets(10, 0, 5,  0));
+        	}
         });
     }
 }

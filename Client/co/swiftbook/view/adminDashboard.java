@@ -18,7 +18,6 @@ import javafx.scene.*;
 public class AdminDashboard extends Application {
 
     public static void main(String[] args) {
-    	
     	launch(args);
     }
     
@@ -45,7 +44,7 @@ public class AdminDashboard extends Application {
         VBox logBox = new VBox();
         HBox actions = new HBox();
         
-        Button bookRoomBtn = new Button("Create / Delete Booking");
+        Button bookRoomBtn = new Button("Room Booking");
         Button detailsBtn = new Button("Find Meeting Details");
         Button test = new Button("");
         Button logOut = new Button("Log Out");
@@ -69,14 +68,13 @@ public class AdminDashboard extends Application {
         actions.getStyleClass().add("vbox");
         actions.setAlignment(Pos.CENTER);
         logBox.setAlignment(Pos.CENTER);
-        actions.setPadding(new Insets(20, 0, 75, 0));
-        
         dashTitle.getStyleClass().add("dashTitle");
         bookRoomBtn.getStyleClass().add("dashButton");
         userBtn.getStyleClass().add("dashButton");
         roomBtn.getStyleClass().add("dashButton");
         detailsBtn.getStyleClass().add("dashButton");
         logOut.getStyleClass().add("logOutButton");
+        actions.setPadding(new Insets(100, 0, 165, 0));
 
         // Add To View
         root.setTop(viewTitle);

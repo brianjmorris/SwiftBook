@@ -30,7 +30,7 @@ public class RoomDetails extends Application {
     	// View title
         primaryStage.setTitle("SwiftBook");
         BorderPane root = new BorderPane();
-        root.setPadding(new Insets(150, 200, 115, 200));
+        root.setPadding(new Insets(100, 250, 115, 250));
         Scene scene = new Scene(root, 1000, 800);
         scene.getStylesheets().add(getClass().getResource("stylesheet.css").toExternalForm());
         
@@ -41,19 +41,22 @@ public class RoomDetails extends Application {
         Text dashTitle = new Text("Search Meeting Details");
         VBox viewTitle = new VBox();
         viewTitle.requestFocus();
-
+        
         // User Options
         VBox details = new VBox();
        
         TextField roomNum = new TextField();
-        TextArea roomDetails = new TextArea();
+        TextField date = new TextField();
+        TextArea roomDetails = new TextArea("TeeiwfwandwaTeeiwfwandwadwdbwdpqwncekrbebfilevfleavveTeeiwfwandwadwdbwdpqwncekrbebfilevfleavveTeeiwfwandwadwdbwTeeiwfwandwaTeeiwfwandwadwdbwdpqwncekrbebfilevfleavveTeeiwfwandwadwdbwdpqwncekrbebfilevfleavveTeeiwfwandwadwdbwdpqwncekrbebfilevfleavvedwdbwdpqwncekrbebfilevfleavvedpqwncekrbebfilevfleavvedwdbwdpqwncekrbebfilevfleavve");
         Button search = new Button("Search");
         Button back = new Button("Back");
         
         viewTitle.getChildren().addAll(imageView, dashTitle);
-        details.getChildren().addAll(roomNum, roomDetails, search, back);
-
+        details.getChildren().addAll(roomNum, date, roomDetails, search, back);
+        
         // Styling
+        roomDetails.setWrapText(true);
+        roomDetails.setVisible(false);
         viewTitle.getStyleClass().add("vbox");
         viewTitle.setAlignment(Pos.CENTER);
         details.getStyleClass().add("vbox");
@@ -64,7 +67,9 @@ public class RoomDetails extends Application {
         search.getStyleClass().add("dashButton");
         roomNum.getStyleClass().add("form");
         roomNum.setPromptText("Room Number");
-        roomDetails.getStyleClass().add("form");
+        date.getStyleClass().add("form");
+        date.setPromptText("Enter Date");
+        roomDetails.getStyleClass().add("text-area");
         roomDetails.setMaxHeight(200);
         roomDetails.setPromptText("Click Search to Display Room Details");
         back.getStyleClass().add("logOutButton");
@@ -89,6 +94,10 @@ public class RoomDetails extends Application {
             	UserDashboard dash = new UserDashboard();
             	dash.start(primaryStage);
             }
+        });
+        
+        search.setOnAction(e -> {
+            roomDetails.setVisible(true);
         });
         
     }

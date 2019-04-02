@@ -41,6 +41,7 @@ public class UserDashboard extends Application {
         
         // User Options
         VBox actions = new VBox();
+        VBox logBox = new VBox();
         
         String test = Login.getOrganization();
         System.out.println(test);
@@ -50,23 +51,26 @@ public class UserDashboard extends Application {
         Button logOut = new Button("Log Out");
         
         viewTitle.getChildren().addAll(imageView, dashTitle);
-        actions.getChildren().addAll(bookRoomBtn, detailsBtn, logOut);
+        actions.getChildren().addAll(bookRoomBtn, detailsBtn);
+        logBox.getChildren().addAll(actions, logOut);
 
         // Styling
         viewTitle.getStyleClass().add("vbox");
         viewTitle.setAlignment(Pos.CENTER);
         actions.getStyleClass().add("vbox");
-        actions.setAlignment(Pos.CENTER);
+        actions.setAlignment(Pos.CENTER); 
+        logBox.setAlignment(Pos.CENTER);
         dashTitle.getStyleClass().add("dashTitle");
         bookRoomBtn.getStyleClass().add("dashButton");
         detailsBtn.getStyleClass().add("dashButton");
         logOut.getStyleClass().add("logOutButton");
+        actions.setPadding(new Insets(100, 0, 165, 0));
 
         // Add To View
         root.setTop(viewTitle);
-        root.setBottom(actions);
+        root.setBottom(logBox);
         BorderPane.setAlignment(imageView, Pos.TOP_CENTER);
-        BorderPane.setAlignment(actions, Pos.TOP_CENTER);
+        BorderPane.setAlignment(logBox, Pos.TOP_CENTER);
         
         primaryStage.setScene(scene);
         primaryStage.show();

@@ -38,7 +38,9 @@ public class Registration extends Application {
         root.setTop(viewTitle);
         
         // Organization Details
+        Text message = new Text("");
         VBox organizationDetails = new VBox();
+        VBox logBox = new VBox();
         viewTitle.requestFocus();
         
         TextField orgName = new TextField();
@@ -54,20 +56,25 @@ public class Registration extends Application {
         PasswordField password = new PasswordField();
         password.setPromptText("Password");
         email.setPromptText("Email");
+        Button back = new Button("Back");
         
         // Submit
         Button submit = new Button("Submit");
-        root.setBottom(submit);
-        BorderPane.setAlignment(submit, Pos.CENTER);
-        BorderPane.setMargin(submit, new Insets(0, 0, 75, 0));
+        root.setBottom(logBox);
+        BorderPane.setAlignment(logBox, Pos.CENTER);
+        organizationDetails.setAlignment(Pos.CENTER);
+        logBox.setAlignment(Pos.CENTER);
+        BorderPane.setMargin(logBox, new Insets(0, 250, 75, 250));
         
         // Styling
         root.setCenter(organizationDetails);
-        BorderPane.setMargin(organizationDetails,  new Insets(10, 300, 0, 300));
+        BorderPane.setMargin(organizationDetails,  new Insets(0, 300, 0, 300));
         root.getStyleClass().add("root");
-        root.setPadding(new Insets(150, 0, 0, 0));
+        root.setPadding(new Insets(120, 0, 0, 0));
+        back.getStyleClass().add("logOutButton");
+        message.getStyleClass().add("message");
         
-        organizationDetails.setPadding(new Insets(30, 10, 30, 10));
+        organizationDetails.setPadding(new Insets(30, 10, 15, 10));
         organizationDetails.setSpacing(15);
         
         viewTitle.getStyleClass().add("staticText");
@@ -77,7 +84,8 @@ public class Registration extends Application {
         adminPrompt.getStyleClass().add("promptText");
         
         // Add company details to group
-        organizationDetails.getChildren().addAll(orgName, adminPrompt, firstName, lastName, email, username, password);
+        organizationDetails.getChildren().addAll(message, orgName, adminPrompt, firstName, lastName, username, email, password, submit);
+        logBox.getChildren().addAll(organizationDetails, back);
         
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -94,13 +102,11 @@ public class Registration extends Application {
                 scene.setCursor(Cursor.DEFAULT);
             }
         });
+        
+        back.setOnAction(e -> {
+            Login login = new Login();
+            login.start(primaryStage);
+        });
+        
     }
-
-	public Pane getRoot() {
-		return root;
-	}
-	
-	public Scene getScene() {
-		return scene;
-	}
 }

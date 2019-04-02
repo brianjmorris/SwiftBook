@@ -10,7 +10,8 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.PasswordField;
+import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -21,7 +22,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.*;
 
-public class AdminUsers extends Application {
+public class AdminBuildings extends Application {
 	
     public static void main(String[] args) {
 
@@ -32,9 +33,9 @@ public class AdminUsers extends Application {
     public void start(Stage primaryStage) {
     	
     	// View title
-        primaryStage.setTitle("SwiftBook | User Administration");
+        primaryStage.setTitle("SwiftBook | Building Administration");
         BorderPane root = new BorderPane();
-        root.setPadding(new Insets(50, 275, 115, 275));
+        root.setPadding(new Insets(100, 275, 115, 275));
         Scene scene = new Scene(root, 1000, 800);
         scene.getStylesheets().add(getClass().getResource("stylesheet.css").toExternalForm());
         
@@ -42,36 +43,32 @@ public class AdminUsers extends Application {
         Image softwareName = new Image("co/swiftbook/view/img/swiftbook.png", 0, 115, true, true);
         ImageView imageView = new ImageView();
         imageView.setImage(softwareName);
-        Text dashTitle = new Text("Add or Delete Users");
-        VBox viewTitle = new VBox();
+        Text dashTitle = new Text("Add or Delete Buildings");
+        VBox viewTitle = new VBox(); 
         viewTitle.requestFocus();
 
-        // Options
+        // User Options
         VBox details = new VBox();
         VBox logBox = new VBox();
         
         ObservableList<String> options = 
         	    FXCollections.observableArrayList(
-        	        "Add User",
-        	        "Delete User"
+        	        "Add Building",
+        	        "Delete Building"
         	    );
         
         final ComboBox<String> action = new ComboBox(options);
-        action.setValue("Add User");
+        action.setValue("Add Building");
        
+        TextField buildingName = new TextField();
         Text message = new Text("");
-        TextField username = new TextField();
-        TextField firstName = new TextField();
-        TextField lastName = new TextField();
-        TextField email = new TextField();
-        
-        PasswordField userPassword = new PasswordField();
+        TextField address = new TextField();
+        RadioButton wheelchairAccess = new RadioButton("Wheelchair Accessible");
         Button back = new Button("Back");
-        back.setLayoutX(100);
         Button submit = new Button("Submit");
         
-        viewTitle.getChildren().addAll(imageView, dashTitle);
-        details.getChildren().addAll(message, action, username, firstName, lastName, email, userPassword, submit);
+        viewTitle.getChildren().addAll(imageView, dashTitle, message);
+        details.getChildren().addAll(action, buildingName, address, wheelchairAccess, submit);
         logBox.getChildren().addAll(details, back);
 
         // Styling
@@ -80,25 +77,18 @@ public class AdminUsers extends Application {
         details.getStyleClass().add("vbox");
         details.setAlignment(Pos.CENTER);
         logBox.setAlignment(Pos.CENTER);
-        details.setPadding(new Insets(20, 0, 17, 0));
-        details.setSpacing(60);
+        details.setPadding(new Insets(40, 0, 85, 0));
+        details.setSpacing(70);
         dashTitle.getStyleClass().add("dashTitle");
         submit.getStyleClass().add("dashButton");
         action.getStyleClass().add("form");
-        action.setValue("Add User");
-        username.getStyleClass().add("form");
-        username.setPromptText("Username");
-        firstName.getStyleClass().add("form");
-        firstName.setPromptText("First Name");
-        lastName.getStyleClass().add("form");
-        lastName.setPromptText("Last Name");
-        email.getStyleClass().add("form");
-        email.setPromptText("Email");
-        userPassword.getStyleClass().add("form");
-        userPassword.setPromptText("User Password");
+        buildingName.getStyleClass().add("form");
+        buildingName.setPromptText("Building Name");
+        address.getStyleClass().add("form");
+        address.setPromptText("Address");
         back.getStyleClass().add("logOutButton");
-        message.getStyleClass().add("message");
-
+        wheelchairAccess.getStyleClass().add("toggleButton");
+        
         // Add To View
         root.setTop(viewTitle);
         root.setBottom(logBox);
@@ -109,6 +99,18 @@ public class AdminUsers extends Application {
         primaryStage.show();
         
         // Event Handling
+        action.setOnAction(e -> {
+        	if (action.getValue().toString().equals("Delete Building")) {
+                details.getChildren().removeAll(address, wheelchairAccess);
+                details.setPadding(new Insets(40, 0, 203, 0));
+        	}
+        	if (action.getValue().toString().equals("Add Building")) {
+                details.getChildren().removeAll(submit);
+                details.getChildren().addAll(address, wheelchairAccess, submit);
+                details.setPadding(new Insets(40, 0, 85, 0));
+        	}
+        });
+        
         back.setOnAction(e -> {
             if (Login.adminAccess()) {
             	AdminDashboard dash = new AdminDashboard();
@@ -119,21 +121,6 @@ public class AdminUsers extends Application {
             	UserDashboard dash = new UserDashboard();
             	dash.start(primaryStage);
             }
-        });
-        
-        action.setOnAction(e -> {
-        	if (action.getValue().toString().equals("Delete User")) {
-                details.getChildren().removeAll(firstName, lastName, email, userPassword);
-                root.setPadding(new Insets(150, 275, 115, 275));
-                details.setPadding(new Insets(40, 0, 155, 0));
-        	}
-        	
-        	if (action.getValue().toString().equals("Add User")) {
-                details.getChildren().removeAll(submit, back);
-                details.getChildren().addAll(firstName, lastName, email, userPassword, submit, back);
-                root.setPadding(new Insets(50, 275, 115, 275));
-                details.setPadding(new Insets(20, 0, 40, 0));
-        	}
         });
     }
 }

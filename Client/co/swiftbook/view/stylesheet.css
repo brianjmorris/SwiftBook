@@ -80,11 +80,24 @@
     -fx-text-fill: #ffffff;
 }
 
+.text-area {
+    -fx-font-size: 24;
+    -fx-font-family: 'Raleway' sans-serif;
+    -fx-text-fill: #ffffff;
+    -fx-border: none;
+    -fx-display-caret: false;
+}
+
+.text-area .content {
+    -fx-background-color: #303030;
+    -fx-border-width: -1;
+}
+
 .toggleButton {
-    -fx-font-size: 20;
+    -fx-font-size: 24;
     -fx-font-family: 'Raleway' sans-serif;
     -fx-border-width: 0;
-    -fx-text-fill: #c6272f;
+    -fx-text-fill: #ffffff;
     -fx-background-color: transparent;
 }
 
