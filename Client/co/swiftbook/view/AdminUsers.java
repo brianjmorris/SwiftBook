@@ -1,5 +1,12 @@
 package co.swiftbook.view;
 
+import co.swiftbook.apiClient.BuildingApiClient;
+import co.swiftbook.apiClient.OrganizationApiClient;
+import co.swiftbook.apiClient.RoomApiClient;
+import co.swiftbook.apiClient.UserApiClient;
+import co.swiftbook.entity.Building;
+import co.swiftbook.entity.Room;
+import co.swiftbook.entity.User;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,6 +18,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -34,7 +42,7 @@ public class AdminUsers extends Application {
     	// View title
         primaryStage.setTitle("SwiftBook | User Administration");
         BorderPane root = new BorderPane();
-        root.setPadding(new Insets(50, 275, 115, 275));
+        root.setPadding(new Insets(2, 275, 115, 275));
         Scene scene = new Scene(root, 1000, 800);
         scene.getStylesheets().add(getClass().getResource("stylesheet.css").toExternalForm());
         
@@ -64,6 +72,7 @@ public class AdminUsers extends Application {
         TextField firstName = new TextField();
         TextField lastName = new TextField();
         TextField email = new TextField();
+        RadioButton isAdmin = new RadioButton("Admin Access");
         
         PasswordField userPassword = new PasswordField();
         Button back = new Button("Back");
@@ -71,7 +80,7 @@ public class AdminUsers extends Application {
         Button submit = new Button("Submit");
         
         viewTitle.getChildren().addAll(imageView, dashTitle);
-        details.getChildren().addAll(message, action, username, firstName, lastName, email, userPassword, submit);
+        details.getChildren().addAll(message, action, username, firstName, lastName, email, userPassword, isAdmin, submit);
         logBox.getChildren().addAll(details, back);
 
         // Styling
@@ -98,7 +107,8 @@ public class AdminUsers extends Application {
         userPassword.setPromptText("User Password");
         back.getStyleClass().add("logOutButton");
         message.getStyleClass().add("message");
-
+        isAdmin.getStyleClass().add("toggleButton");
+        
         // Add To View
         root.setTop(viewTitle);
         root.setBottom(logBox);
@@ -123,17 +133,58 @@ public class AdminUsers extends Application {
         
         action.setOnAction(e -> {
         	if (action.getValue().toString().equals("Delete User")) {
-                details.getChildren().removeAll(firstName, lastName, email, userPassword);
+                details.getChildren().removeAll(firstName, lastName, email, userPassword, isAdmin);
                 root.setPadding(new Insets(150, 275, 115, 275));
                 details.setPadding(new Insets(40, 0, 155, 0));
         	}
         	
         	if (action.getValue().toString().equals("Add User")) {
                 details.getChildren().removeAll(submit, back);
-                details.getChildren().addAll(firstName, lastName, email, userPassword, submit, back);
-                root.setPadding(new Insets(50, 275, 115, 275));
-                details.setPadding(new Insets(20, 0, 40, 0));
+                details.getChildren().addAll(firstName, lastName, email, userPassword, isAdmin, submit, back);
+                root.setPadding(new Insets(2, 275, 115, 275));
+                details.setPadding(new Insets(15, 0, 40, 0));
         	}
         });
+        
+        submit.setOnAction(e -> {
+
+    		// Create User
+        	if (action.getValue().toString().equals("Add User")) {
+        		UserApiClient userApiClient = new UserApiClient();
+        		
+        		Boolean admin = false;
+        		
+        		if (isAdmin.isSelected()) {
+        			admin = true;
+        		}
+        		
+        		User newUser = new User(username.getText(), email.getText(), firstName.getText(), lastName.getText(), Login.getOrganizationObj(), admin);
+        		newUser = userApiClient.create(newUser);        		
+        		
+        		username.clear();
+        		email.clear();
+        		firstName.clear();
+        		lastName.clear();
+        		message.setText("User Added");
+        	}
+
+        	// Delete User
+			if (action.getValue().toString().equals("Delete User")) {
+        		UserApiClient userApiClient = new UserApiClient();
+        		
+        		User[] allUsers = userApiClient.getAll();
+        		int userID = 0;
+        		
+        		for (int i = 0; i < allUsers.length; i++) {
+        			if (username.getText().equals(allUsers[i].getUsername())) {
+        				userID = allUsers[i].getID();
+        			}
+        		}
+        		
+        		userApiClient.delete(userID);
+        		username.clear();
+				message.setText("User Deleted");
+			}
+		});
     }
 }

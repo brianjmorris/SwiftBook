@@ -1,5 +1,9 @@
 package co.swiftbook.view;
 
+import co.swiftbook.apiClient.BuildingApiClient;
+import co.swiftbook.apiClient.RoomApiClient;
+import co.swiftbook.entity.Building;
+import co.swiftbook.entity.Room;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -132,6 +136,52 @@ public class AdminRooms extends Application {
                 details.getChildren().addAll(buildingName, roomNumber, roomName, floorNumber, buildingSection, roomType, submit);
                 root.setPadding(new Insets(5, 275, 115, 275));
                 details.setPadding(new Insets(10, 0, 5,  0));
+        	}
+        });
+        
+        submit.setOnAction(e -> {
+
+    		// Create Room
+        	if (action.getValue().toString().equals("Add Room")) {
+        		RoomApiClient roomApiClient = new RoomApiClient();
+        		BuildingApiClient buildingApiClient = new BuildingApiClient();
+        		
+        		Building[] allBuildings = buildingApiClient.getAll();
+        		Building building = null;
+        		
+        		for (int i = 0; i < allBuildings.length; i++) {
+        			if (allBuildings[i].getName().equals(buildingName.getText())) {
+        				building = allBuildings[i];
+        			}
+        		}
+        		
+        		Room room = new Room(building, roomName.getText(), roomNumber.getText(), floorNumber.getText(), buildingSection.getText(), roomType.getText());
+        		room = roomApiClient.create(room);
+        		buildingName.clear();
+        		roomName.clear();
+        		roomNumber.clear();
+        		floorNumber.clear();
+        		buildingSection.clear();
+        		roomType.clear();
+	    		message.setText("Room Added");
+        	}
+        	
+        	// Delete Room
+        	if (action.getValue().toString().equals("Delete Room")) {
+						        		
+        		RoomApiClient roomApiClient = new RoomApiClient();
+        		Room[] rooms = roomApiClient.getAll();
+        		int roomID = 0;
+        		
+        		for (int i = 0; i < rooms.length; i++) {
+        			if (rooms[i].getRoomNumber().equals(roomNumber.getText())) {
+        				roomID = rooms[i].getID();
+        			}
+        		}
+						        		
+        		roomApiClient.delete(roomID);
+        		roomNumber.clear();
+        		message.setText("Room Deleted");
         	}
         });
     }

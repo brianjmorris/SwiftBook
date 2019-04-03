@@ -26,6 +26,7 @@ public class Login extends Application {
 	private static LoginApiClient loginApiClient;
 	private static Organization organization;
 	private static Boolean adminAccess;
+	private static User user;
 	
     public static void main(String[] args) {
     	userApiClient = new UserApiClient();
@@ -37,6 +38,14 @@ public class Login extends Application {
     public static String getOrganization() {
     	if (organization == null) { return "Test"; }
     	return organization.getName();
+    }
+    
+    public static User getUser() {
+    	return user;
+    }
+    
+    public static Organization getOrganizationObj() {
+    	return organization;
     }
     
     public static Boolean adminAccess() {
@@ -137,6 +146,7 @@ public class Login extends Application {
         		
           		organization = currentUser.getOrganization();
           		adminAccess = currentUser.isAdministrator();
+          		user = currentUser;
           		
           		System.out.println(currentUser.isAdministrator());
         		

@@ -1,5 +1,13 @@
 package co.swiftbook.view;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+import co.swiftbook.apiClient.BookingApiClient;
+import co.swiftbook.apiClient.RoomApiClient;
+import co.swiftbook.entity.Booking;
+import co.swiftbook.entity.Building;
+import co.swiftbook.entity.Room;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -58,14 +66,14 @@ public class UserBooking extends Application {
         	action.setValue("Book Room");
        
         Text message = new Text("");
-        TextField roomName = new TextField();
+        TextField roomNumber = new TextField();
         TextField startTime = new TextField();
         TextField endTime = new TextField();
         Button back = new Button("Back");
         Button submit = new Button("Submit");
         
         viewTitle.getChildren().addAll(imageView, dashTitle, message);
-        details.getChildren().addAll( action, roomName, startTime, endTime, submit, back);
+        details.getChildren().addAll( action, roomNumber, startTime, endTime, submit, back);
 
         // Styling
         viewTitle.getStyleClass().add("vbox");
@@ -78,12 +86,12 @@ public class UserBooking extends Application {
         submit.getStyleClass().add("dashButton");
         message.getStyleClass().add("message");
         action.getStyleClass().add("form");
-        roomName.getStyleClass().add("form");
-        roomName.setPromptText("Room Number");
+        roomNumber.getStyleClass().add("form");
+        roomNumber.setPromptText("Room Number");
         startTime.getStyleClass().add("form");
-       startTime.setPromptText("Start Time");
+       startTime.setPromptText("Start Time [Format: 2019-04-02 11:30:00]");
         endTime.getStyleClass().add("form");
-        endTime.setPromptText("End Time");
+        endTime.setPromptText("End Time [Format: 2019-04-02 12:30:00]");
         back.getStyleClass().add("logOutButton");
         
         // Add To View
@@ -108,5 +116,53 @@ public class UserBooking extends Application {
             }
         });
         
+        submit.setOnAction(e -> {
+        	if (action.getValue().toString().equals("Book Room")) {
+        		BookingApiClient bookingApiClient = new BookingApiClient();
+        		RoomApiClient roomApiClient = new RoomApiClient();
+        		Room[] allRooms = roomApiClient.getAll();
+        		Room room = null;
+
+        		for (int i = 0; i < allRooms.length; i++) {
+        			if (roomNumber.getText().equals(allRooms[i].getRoomNumber())) {
+        				room = allRooms[i];
+        				System.out.println("Test");
+        			}
+        		}
+        		
+        		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        		
+        		Booking booking = new Booking(Login.getUser(), room, LocalDateTime.parse(startTime.getText(), formatter), LocalDateTime.parse(endTime.getText(), formatter));
+        		
+        		booking = bookingApiClient.create(booking);
+        		roomNumber.clear();
+        		startTime.clear();
+        		endTime.clear();
+        		message.setText("You have booked the room.");
+        	}      
+        	
+        	if (action.getValue().toString().equals("Release Booking")) {
+        		BookingApiClient bookingApiClient = new BookingApiClient();
+        		RoomApiClient roomApiClient = new RoomApiClient();
+        		
+        		int bookingID = 0;
+        		
+        		// Get booking ID
+        		Booking[] allBookings = bookingApiClient.getAll();
+        		Room[] allRooms = roomApiClient.getAll();
+        		
+        		for (int i = 0; i < allRooms.length; i++) {
+        			if (allBookings[i].getRoom().getRoomNumber().equals(roomNumber.getText())) {
+        				bookingID = allBookings[i].getID();
+        			}
+        		}
+        		
+        		roomNumber.clear();
+        		startTime.clear();
+        		endTime.clear();
+        		bookingApiClient.delete(bookingID);
+        		message.setText("You have removed the booking.");
+        	}    
+        });
     }
 }

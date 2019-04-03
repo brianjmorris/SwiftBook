@@ -1,5 +1,9 @@
 package co.swiftbook.view;
 
+import co.swiftbook.apiClient.BuildingApiClient;
+import co.swiftbook.apiClient.OrganizationApiClient;
+import co.swiftbook.entity.Building;
+import co.swiftbook.entity.Organization;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -86,6 +90,7 @@ public class AdminBuildings extends Application {
         buildingName.setPromptText("Building Name");
         address.getStyleClass().add("form");
         address.setPromptText("Address");
+        message.getStyleClass().add("message");
         back.getStyleClass().add("logOutButton");
         wheelchairAccess.getStyleClass().add("toggleButton");
         
@@ -111,6 +116,10 @@ public class AdminBuildings extends Application {
         	}
         });
         
+        submit.setOnAction( e -> {
+        	
+        });
+        
         back.setOnAction(e -> {
             if (Login.adminAccess()) {
             	AdminDashboard dash = new AdminDashboard();
@@ -121,6 +130,43 @@ public class AdminBuildings extends Application {
             	UserDashboard dash = new UserDashboard();
             	dash.start(primaryStage);
             }
+        });
+        
+        submit.setOnAction(e -> {
+    		BuildingApiClient buildingApiClient = new BuildingApiClient();
+
+    		// Create Building
+        	if (action.getValue().toString().equals("Add Building")) {
+	    		Boolean wheelchairBool;
+	    		if (wheelchairAccess.isSelected()) {
+	    			wheelchairBool = true;
+	    		}
+	    		else {
+	    			wheelchairBool = false;
+	    		}
+	
+	    		Building building = new Building(Login.getOrganizationObj(), buildingName.getText(), address.getText(), wheelchairBool);
+	    		building = buildingApiClient.create(building);
+	    		
+	    		buildingName.clear();
+	    		address.clear();
+	    		message.setText("New Building Created");
+        	}
+        	
+        	// Delete Building
+        	if (action.getValue().toString().equals("Delete Building")) {
+        		int buildingID = 0;
+        		
+        		Building[] allBuildings = buildingApiClient.getAll();
+        		for (int i = 0; i < allBuildings.length; i++) {
+        			if (allBuildings[i].getName().equals(buildingName.getText())) {
+        				buildingID = allBuildings[i].getID();
+        			}
+        		}
+        		buildingApiClient.delete(buildingID);
+        		buildingName.clear();
+        		message.setText("Building Deleted");
+        	}
         });
     }
 }

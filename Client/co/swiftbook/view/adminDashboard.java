@@ -30,7 +30,7 @@ public class AdminDashboard extends Application {
         root.setPadding(new Insets(170, 0,  150, 0));
         Scene scene = new Scene(root, 1000, 800);
         scene.getStylesheets().add(getClass().getResource("stylesheet.css").toExternalForm());
-        
+ 
         // Logo and  Title
         Image softwareName = new Image("co/swiftbook/view/img/swiftbook.png", 0, 115, true, true);
         ImageView imageView = new ImageView();
@@ -46,18 +46,20 @@ public class AdminDashboard extends Application {
         
         Button bookRoomBtn = new Button("Room Booking");
         Button detailsBtn = new Button("Find Meeting Details");
-        Button test = new Button("");
+        Button test = new Button("*");
         Button logOut = new Button("Log Out");
         
         Button userBtn = new Button("Add or Delete User");
         Button roomBtn = new Button("Add or Delete Room");
+        Button buildingBtn = new Button("Add or Delete Building");
+        Text blank = new Text();
         
         viewTitle.getChildren().addAll(imageView, dashTitle);
-        adminActions.getChildren().addAll(userBtn, roomBtn);
-        userActions.getChildren().addAll(bookRoomBtn, detailsBtn);
+        adminActions.getChildren().addAll(userBtn, roomBtn, buildingBtn);
+        userActions.getChildren().addAll(bookRoomBtn, detailsBtn, blank);
         actions.getChildren().addAll(adminActions, userActions);
         logBox.getChildren().addAll(actions, logOut);
-        
+
         // Styling
         viewTitle.getStyleClass().add("vbox");
         viewTitle.setAlignment(Pos.CENTER);
@@ -72,9 +74,11 @@ public class AdminDashboard extends Application {
         bookRoomBtn.getStyleClass().add("dashButton");
         userBtn.getStyleClass().add("dashButton");
         roomBtn.getStyleClass().add("dashButton");
+        buildingBtn.getStyleClass().add("dashButton");
         detailsBtn.getStyleClass().add("dashButton");
         logOut.getStyleClass().add("logOutButton");
-        actions.setPadding(new Insets(100, 0, 165, 0));
+        blank.getStyleClass().add("spacer");
+        actions.setPadding(new Insets(100, 0, 100, 0));
 
         // Add To View
         root.setTop(viewTitle);
@@ -104,6 +108,11 @@ public class AdminDashboard extends Application {
          
         detailsBtn.setOnAction(e -> {
             RoomDetails view = new RoomDetails();
+            view.start(primaryStage);
+        });
+        
+        buildingBtn.setOnAction(e -> {
+            AdminBuildings view = new AdminBuildings();
             view.start(primaryStage);
         });
         

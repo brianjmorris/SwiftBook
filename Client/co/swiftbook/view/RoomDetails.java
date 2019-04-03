@@ -1,5 +1,7 @@
 package co.swiftbook.view;
 
+import co.swiftbook.apiClient.BookingApiClient;
+import co.swiftbook.apiClient.RoomApiClient;
 import javafx.application.Application;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -98,6 +100,11 @@ public class RoomDetails extends Application {
         
         search.setOnAction(e -> {
             roomDetails.setVisible(true);
+            
+    		BookingApiClient bookingApiClient = new BookingApiClient();
+    		RoomApiClient roomApiClient = new RoomApiClient();
+    		
+            
         });
         
     }

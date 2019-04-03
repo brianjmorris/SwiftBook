@@ -80,6 +80,14 @@
     -fx-text-fill: #ffffff;
 }
 
+.spacer {
+    -fx-font-size: 43;
+    -fx-font-family: 'Raleway' sans-serif;
+    -fx-border-width: 0;
+    -fx-text-fill: #303030;
+    -fx-background-color: transparent;
+}
+
 .text-area {
     -fx-font-size: 24;
     -fx-font-family: 'Raleway' sans-serif;
