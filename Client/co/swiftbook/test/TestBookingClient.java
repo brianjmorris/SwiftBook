@@ -63,7 +63,7 @@ public class TestBookingClient {
 		for(int i = 0; i < bookings.length; i++) {
 			System.out.println(" " + bookings[i].getID() + ": " + bookings[i]);
 		}
-		
+
 		// delete a booking
 		if(bookingApiClient.delete(testBooking.getID())) {
 			System.out.println("\nDeleted Booking: " + testBooking);
