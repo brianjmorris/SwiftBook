@@ -147,9 +147,7 @@ public class Login extends Application {
           		organization = currentUser.getOrganization();
           		adminAccess = currentUser.isAdministrator();
           		user = currentUser;
-          		
-          		System.out.println(currentUser.isAdministrator());
-        		
+          		        		
           		if (currentUser.isAdministrator()) {
           			AdminDashboard dash = new AdminDashboard();
           			dash.start(primaryStage);
