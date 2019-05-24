@@ -25,11 +25,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.*;
 
 public class AdminRooms extends Application {
-	
-    public static void main(String[] args) {
-
-    	launch(args);
-    }
     
     @Override
     public void start(Stage primaryStage) {

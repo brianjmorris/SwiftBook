@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="gson/|jBCrypt-0.4/src/|src/|co/swiftbook/view/view_src/" kind="src" path="Client"/>
+	<classpathentry excluding="gson/|jBCrypt-0.4/src/|src/|co/swiftbook/view/view_src/|co/swiftbook/test/" kind="src" path="Client"/>
 	<classpathentry kind="src" path="Libraries"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="Libraries/gson.jar"/>

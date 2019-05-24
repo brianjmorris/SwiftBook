@@ -26,10 +26,6 @@ public class Registration extends Application {
 	
     final BorderPane root = new BorderPane();
     Scene scene = new Scene(root, 1000, 800);
-	
-    public static void main(String[] args) {
-    	launch(args);
-    }
     
     @Override
     public void start(Stage primaryStage) {
